@@ -1,0 +1,19 @@
+{
+  "libs": [
+    "browser",
+    "jquery",
+    "chai",
+    "express"
+  ],
+  "loadEagerly": [
+    "./server.js",
+    "./app/**/*.js"
+  ],
+  "plugins": {
+    "node": {},
+    "requirejs": {
+      "baseURL": "./",
+      "paths": {}
+    }
+  }
+}
