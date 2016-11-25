@@ -19,8 +19,8 @@
     "FreeCodeCamp"
   ],
   "scripts": {
-      "start": "node server.js",
-      "test": "mocha tests/*.js"
+    "start": "node server.js",
+    "test": "mocha tests/*.js"
   },
   "author": "Tuomas Poikela",
   "license": "MIT",
@@ -31,5 +31,8 @@
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
     "passport-github": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0"
   }
 }
