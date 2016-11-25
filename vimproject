@@ -1,0 +1,112 @@
+fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
+ README.md
+ package.json
+ server.js
+ git=.git {
+  hooks=hooks {
+   applypatch-msg.sample
+   commit-msg.sample
+   post-update.sample
+   pre-applypatch.sample
+   pre-commit.sample
+   pre-push.sample
+   pre-rebase.sample
+   prepare-commit-msg.sample
+   update.sample
+  }
+  logs=logs {
+  }
+  objects=objects {
+  }
+  refs=refs {
+  }
+  info=info {
+  }
+  branches=branches {
+  }
+ }
+ app=app {
+  controllers=controllers {
+   clickController.client.js
+   clickHandler.server.js
+   pollController.client.js
+   pollController.server.js
+   pollCreator.client.js
+   userController.client.js
+   userController.server.js
+  }
+  config=config {
+   auth.js
+   passport.js
+  }
+  routes=routes {
+   index.js
+  }
+  models=models {
+   polls.js
+   users.js
+  }
+  common=common {
+   ajax-functions.js
+   poll.js
+  }
+ }
+ node_modules=node_modules {
+  express-session=express-session {
+   HISTORY.md
+   README.md
+   index.js
+   package.json
+  }
+  passport-github=passport-github {
+   README.md
+   package.json
+  }
+  express=express {
+   History.md
+   Readme.md
+   index.js
+   package.json
+  }
+  passport=passport {
+   package.json
+  }
+  mongoose=mongoose {
+   CONTRIBUTING.md
+   History.md
+   README.md
+   index.js
+   package.json
+   release-items.md
+   static.js
+   website.js
+  }
+  dotenv=dotenv {
+   Contributing.md
+   README.md
+   config.js
+   dotenv.png
+   package.json
+  }
+ }
+ public=public {
+  create.html
+  index.html
+  login.html
+  profile.html
+  signup.html
+  css=css {
+   main.css
+  }
+  fonts=fonts {
+   Roboto-Medium.ttf
+   Roboto-Regular.ttf
+  }
+  img=img {
+   clementine_150.png
+   gh-mark-32px.png
+   github_32px.png
+  }
+ }
+}
+

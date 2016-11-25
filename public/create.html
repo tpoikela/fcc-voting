@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!--
+    Created by: Tuomas Poikela, tuomas.poikela@cern.ch
+    Created on: 2016-11-25
+  -->
+
+  <title>FCC Voting</title>
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Main content goes here -->
+  <div class="container">
+    <h1>Create a new poll</h1>
+
+    <div class="row">
+
+    <div class="col-md-6">
+      <button id="create-button" class="btn btn-success">Create</button>
+
+      <p>Name:</p>
+      <input id="poll-name-input" type="text" class="form-control" placeholder="Poll name">
+
+      <span class="label label-default">Option:</span>
+      <input id="option-name-input" type="text" class="form-control" placeholder="Option name">
+      <button id="add-option-button" class="btn btn-default">Add option</button>
+    </div>
+
+    <div class="col-md-6">
+      <p>Options:</p>
+      <ul id="options-list"></ul>
+    </div>
+
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="common/ajax-functions.js"></script>
+  <script src="/controllers/pollCreator.client.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+
+</html>
