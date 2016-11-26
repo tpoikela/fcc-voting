@@ -3,6 +3,7 @@
 var path = process.cwd();
 const ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 const UserController = require(path + '/app/controllers/userController.server.js');
+const PollController = require(path + '/app/controllers/pollController.server.js');
 
 var reqDebug = function(req) {
 	console.log("Headers: " + JSON.stringify(req.headers));
@@ -11,6 +12,7 @@ var reqDebug = function(req) {
 	console.log("Url:" + JSON.stringify(req.url));
 	console.log("Text:" + JSON.stringify(req.text));
 	console.log("Content:" + JSON.stringify(req.content));
+	console.log("Query:" + JSON.stringify(req.query));
 };
 
 module.exports = function (app, passport) {
@@ -25,6 +27,7 @@ module.exports = function (app, passport) {
 
 	var clickHandler = new ClickHandler();
     var userController = new UserController();
+	var pollController = new PollController();
 
 	app.route('/')
 		.get(function (req, res) {
@@ -68,14 +71,13 @@ module.exports = function (app, passport) {
 
     app.route('/polls')
         .get(function(req, res) {
-            res.json(["aaaa", "bbbb"]);
+            pollController.getPolls(req, res);
         });
 
     app.route('/polls/create')
         .post(isLoggedIn, function(req, res) {
-            console.log("Received a poll.");
-            console.log(JSON.stringify(req.body));
-            res.send(200);
+            reqDebug(req);
+            pollController.addPoll(req, res);
         });
 
     app.route('/polls/:id')
@@ -94,7 +96,6 @@ module.exports = function (app, passport) {
 		function(req, res) {
 			res.redirect('/');
 		});
-
 
 	app.route('/auth/github')
 		.get(passport.authenticate('github'));
