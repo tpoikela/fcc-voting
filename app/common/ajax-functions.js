@@ -26,7 +26,11 @@ var ajaxFunctions = {
 
       xmlhttp.open(method, url, true);
 
-      if (params) xmlhttp.send(params);
+      if (params) {
+          xmlhttp.setRequestHeader("Content-type", 
+              "application/x-www-form-urlencoded");
+          xmlhttp.send(params);
+      }
       else xmlhttp.send();
    }
 };
