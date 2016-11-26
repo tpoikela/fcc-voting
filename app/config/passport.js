@@ -4,6 +4,8 @@ var GitHubStrategy = require('passport-github').Strategy;
 var User = require('../models/users');
 var configAuth = require('./auth');
 
+var LocalStrategy = require("passport-local").Strategy;
+
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
 		done(null, user.id);
@@ -49,4 +51,23 @@ module.exports = function (passport) {
 			});
 		});
 	}));
+
+	// Strategy for local verification
+    passport.use(new LocalStrategy({
+		// These are defaults, so no need to specify them
+		//userNameField: "username",
+		//passwordField: "password",
+		//passReqToCallback: true,
+		session: true,
+		},
+		function(username, password, done) {
+			User.findOne({"local.username": username}, function(err, user) {
+			  if (err) { return done(err); }
+			  if (!user) { return done(null, false); }
+			  if (user.local.password != password) { return cb(null, false); }
+			  return done(null, user);
+			});
+		}
+	));
+
 };

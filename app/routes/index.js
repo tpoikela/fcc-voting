@@ -2,7 +2,16 @@
 
 var path = process.cwd();
 const ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
-const UserHandler = require(path + '/app/controllers/userController.server.js');
+const UserController = require(path + '/app/controllers/userController.server.js');
+
+var reqDebug = function(req) {
+	console.log("Headers: " + JSON.stringify(req.headers));
+	console.log("Body: " + JSON.stringify(req.body));
+	console.log("Params: " + JSON.stringify(req.params));
+	console.log("Url:" + JSON.stringify(req.url));
+	console.log("Text:" + JSON.stringify(req.text));
+	console.log("Content:" + JSON.stringify(req.content));
+};
 
 module.exports = function (app, passport) {
 
@@ -15,7 +24,7 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
-    var userHandler = new UserHandler();
+    var userController = new UserController();
 
 	app.route('/')
 		.get(function (req, res) {
@@ -52,8 +61,9 @@ module.exports = function (app, passport) {
     // Handle registration of user
     app.route('/forms/signup')
         .post(function(req, res) {
-            console.log("Got a signup form.");
-            res.redirect('/login');
+            console.log("Got a signup form GET request..");
+			reqDebug(req);
+            userController.addUser(req, res);
         });
 
     app.route('/polls')
@@ -64,7 +74,8 @@ module.exports = function (app, passport) {
     app.route('/polls/create')
         .post(isLoggedIn, function(req, res) {
             console.log("Received a poll.");
-            res.sendStat(200);
+            console.log(JSON.stringify(req.body));
+            res.send(200);
         });
 
     app.route('/polls/:id')
@@ -77,11 +88,13 @@ module.exports = function (app, passport) {
 			res.json(req.user.github);
 		});
 
-    // Logs user in via form
+    // Logs user in via form (after successful authentication
 	app.route('/auth/userlogin')
-        .post(function(req, res) {
+        .post(passport.authenticate('local', { failureRedirect: '/login' }),
+		function(req, res) {
+			res.redirect('/');
+		});
 
-        });
 
 	app.route('/auth/github')
 		.get(passport.authenticate('github'));
