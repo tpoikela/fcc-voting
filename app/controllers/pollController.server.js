@@ -7,7 +7,7 @@ module.exports = function() {
 
     /** Finds all polls from the database and returns their name.*/
     this.getPolls = function(req, res) {
-        Poll.find({}, {name: 1, _id: 0}, function(err, result) {
+        Poll.find({}, {name: 1, _id: 1}, function(err, result) {
             if (err) throw err;
             console.log(JSON.stringify(result));
             res.json(result);
@@ -21,11 +21,11 @@ module.exports = function() {
 
         // Extract name and options from post-request
         poll.name = req.body.name;
-        var opts = req.body.options.split(",");
+        var opts = req.body.options;
         poll.options.names = opts;
 
         var votes = [];
-        for (var i = 0; i < poll.options.names.length; i++) {
+        for (var i = 0; i < opts.length; i++) {
             votes.push(0);
         }
         poll.options.votes = votes;

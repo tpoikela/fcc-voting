@@ -17,10 +17,11 @@
     // Returns the option parameters for a poll
     var getOptParams = function() {
         var options = document.getElementsByClassName("poll-option");
-        var res = "options=";
+        //var res = "options=";
+        var res = "";
         for (var i = 0; i < options.length; i++) {
-            res += options[i].innerHTML;
-            if (i < options.length-1) res += ",";
+            res += "options=" + options[i].innerHTML;
+            if (i < options.length-1) res += "&";
         }
         return res;
     };

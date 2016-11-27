@@ -31,6 +31,7 @@ module.exports = function() {
             });
         }
         else {
+            //TODO provide more info for the client
             res.sendStatus(400);
         }
     };

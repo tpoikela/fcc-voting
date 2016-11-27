@@ -12,7 +12,8 @@
         if (polls.length > 0) {
             var html = "";
             for (var i = 0; i < polls.length; i++) {
-                html += '<p>' + polls[i] + '</p>';
+                var id  = polls[i]._id;
+                html += '<p id="' + id '">' + polls[i].name + '</p>';
             }
             pollList.innerHTML = html;
         }
