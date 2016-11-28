@@ -13,7 +13,8 @@
             var html = "";
             for (var i = 0; i < polls.length; i++) {
                 var id  = polls[i]._id;
-                html += '<p id="' + id '">' + polls[i].name + '</p>';
+                var link = '<a href="' + apiUrl + '/' + id + '">';
+                html += link + '<p id="' + id + '">' + polls[i].name + '</p>' + '</a>'
             }
             pollList.innerHTML = html;
         }

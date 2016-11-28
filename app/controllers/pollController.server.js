@@ -3,7 +3,7 @@ const url = require('url');
 
 const Poll = require("../models/polls.js");
 
-module.exports = function() {
+module.exports = function(path) {
 
     /** Finds all polls from the database and returns their name.*/
     this.getPolls = function(req, res) {
@@ -14,7 +14,7 @@ module.exports = function() {
         });
     };
 
-	/** Handles adding of polls.*/
+	/** Handles adding of polls into the database. */
 	this.addPoll = function(req, res) {
         var user = req.user;
         var poll = new Poll();
@@ -37,6 +37,26 @@ module.exports = function() {
         });
 
 	};
+
+    // Serves requested poll as a HTML page
+    this.getPollById = function(req, res) {
+        if (req.params.id) {
+            var pollID = req.params.id;
+            Poll.findOne({_id: pollID}, function(err, result) {
+                if (err) throw err;
+                console.log("getPollByID: " + JSON.stringify(result));
+                var pugVars = {
+                    pollName: result.name,
+                    options: result.options.names,
+                    votes: result.options.votes,
+                };
+                res.render(path + "/pug/poll.pug", pugVars);
+            });
+        }
+        else {
+            res.sendStatus(400);
+        }
+    };
 
 };
 
