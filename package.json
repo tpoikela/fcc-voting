@@ -32,7 +32,8 @@
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
     "passport-github": "^1.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-beta6"
   },
   "devDependencies": {
     "chai": "^3.5.0"

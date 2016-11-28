@@ -1,0 +1,25 @@
+html
+  head
+    title Poll page
+
+    link(href="/public/css/main.css" rel="stylesheet" type="text/css")
+
+  body
+
+    div.container
+      div.row
+        div.col-md-1
+        div.col-md-5
+          h1= pollName
+          p Test paragraph
+
+          button.btn.btn-default Submit
+        div.col-md-5
+          p Another test paragraph
+          p Show poll results here
+          ul
+            - for (var i = 0; i < options.length; i++) {
+              li= options[i]
+            -}
+        div.col-md-1
+
