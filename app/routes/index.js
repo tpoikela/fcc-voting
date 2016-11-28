@@ -27,7 +27,7 @@ module.exports = function (app, passport) {
 
 	var clickHandler = new ClickHandler();
     var userController = new UserController();
-	var pollController = new PollController();
+	var pollController = new PollController(path);
 
 	app.route('/')
 		.get(function (req, res) {
@@ -82,12 +82,26 @@ module.exports = function (app, passport) {
 
     app.route('/polls/:id')
         .get(function(req, res) {
-            res.json(["aaaa", "bbbb"]);
+            pollController.getPollById(req, res);
+            //res.json(["aaaa", "bbbb"]);
         });
 
 	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
+		.get(function (req, res) {
+            if (req.isAuthenticated()) {
+                console.log("Req auth, user " + JSON.stringify(req.user));
+                if (req.user.github.username) {
+                    res.json(req.user.github);
+                }
+                else if (req.user.local.username) {
+                    res.json(req.user.local);
+                }
+                else
+                    res.sendStatus(400); // Something went wrong terribly
+            }
+            else {
+                res.json({name: "guest"});
+            }
 		});
 
     // Logs user in via form (after successful authentication
