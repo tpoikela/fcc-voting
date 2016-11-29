@@ -17,6 +17,20 @@ module.exports = function(path) {
         }
     };
 
+    var updatePollDb = function(pollID, poll, cb) {
+        var setOp = {$set: {
+            "options.votes": poll.options.votes,
+            "options.names": poll.options.names
+        }};
+        var opts = {};
+
+        Poll.update({_id: pollID}, setOp, opts, function(err) {
+            if (err) cb(err);
+            else cb(null);
+        });
+
+    };
+
     /** Finds all polls from the database and returns their name.*/
     this.getPolls = function(req, res) {
         Poll.find({}, {name: 1, _id: 1}, function(err, result) {
@@ -30,6 +44,7 @@ module.exports = function(path) {
 	this.addPoll = function(req, res) {
         var user = req.user;
         var poll = new Poll();
+        poll.info.creator = user.local.username;
 
         // Extract name and options from post-request
         poll.name = req.body.name;
@@ -47,7 +62,7 @@ module.exports = function(path) {
 
         poll.save(function(err) {
             if (err) throw err;
-            res.redirect("/");
+            res.json({msg: "New poll has been created."});
         });
 
 	};
@@ -95,11 +110,11 @@ module.exports = function(path) {
                 var optName = req.body.option;
                 poll.options.names.push(optName);
                 poll.options.votes.push(0);
-
-                poll.update(function(err) {
+                updatePollDb(pollID, poll, function(err) {
                     if (err) throw err;
                     res.redirect("/polls/" + pollID);
                 });
+
             });
         }
         else {
@@ -159,20 +174,11 @@ module.exports = function(path) {
                 }
             }
 
-            var setOp = {$set: {"options.votes": poll.options.votes}};
-            var opts = {};
+            updatePollDb(pollID, poll, function(err){
+                if (err) throw err;
+                res.redirect("/polls/" + pollID);
+            });
 
-            Poll.update({_id: pollID}, setOp, opts, function(err) {
-                if (err) throw err;
-                res.redirect("/polls/" + pollID);
-            });
-            /*
-            poll.update(function(err) {
-                if (err) throw err;
-                console.log("voteOnPoll Poll saved OK: " + JSON.stringify(poll));
-                res.redirect("/polls/" + pollID);
-            });
-           */
 
         });
     };
