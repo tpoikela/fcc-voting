@@ -1,7 +1,16 @@
+//- Source file for a poll page is rendered based on the following:
+//- 1. If a user is authenticated, adds "Add Option" button
+//- 2. If a user is the poll creator, add a Delete Button as well
+
+- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+
 html
   head
-    title Poll page
+    meta(http-equiv="content-type" content="text/html; charset=utf-8")
 
+    title= pollName
+
+    link(href="" + bs rel="stylesheet" type="text/css")
     link(href="/public/css/main.css" rel="stylesheet" type="text/css")
 
   body
@@ -9,17 +18,38 @@ html
     div.container
       div.row
         div.col-md-1
-        div.col-md-5
+
+        //- This part handles data input from users
+        div.col-md-5.poll-page-box
           h1= pollName
           p Test paragraph
 
-          button.btn.btn-default Submit
-        div.col-md-5
+          //- Generate voting options for the user.
+          div.voting-radio-buttons
+            form(method="POST" action="/polls/vote/" + pollID)
+              - for (var i = 0; i < options.length; i++) {
+                div.form-group
+                  label= options[i]
+                  input(type="radio" name="option" value="" + options[i])
+              -}
+              button.btn.btn-default(type="submit") Vote!
+
+          - if (isCreator)
+            form(method="DELETE" action="/polls/delete/" + pollID)
+              button.btn.btn-danger(type="submit") Delete Poll
+
+          - if (isAuth)
+            form(method="POST" action="/polls/update/" + pollID)
+              input.form-control#optionField(name="option" type="text" placeholder="Option")
+              button.btn.btn-default(type="submit") Add Option
+
+        //- This part shows the poll results as a chart
+        div.col-md-5.poll-page-box
           p Another test paragraph
           p Show poll results here
           ul
             - for (var i = 0; i < options.length; i++) {
-              li= options[i]
+              li= options[i] + ": " + votes[i]
             -}
         div.col-md-1
 
