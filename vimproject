@@ -27,8 +27,6 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
  }
  app=app {
   controllers=controllers {
-   clickController.client.js
-   clickHandler.server.js
    pollController.client.js
    pollController.server.js
    pollCreator.client.js
