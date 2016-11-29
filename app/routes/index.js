@@ -1,22 +1,23 @@
 'use strict';
 
 var path = process.cwd();
-const ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 const UserController = require(path + '/app/controllers/userController.server.js');
 const PollController = require(path + '/app/controllers/pollController.server.js');
 
+/** Function for debug logging request.*/
 var reqDebug = function(req) {
 	console.log("Headers: " + JSON.stringify(req.headers));
-	console.log("Body: " + JSON.stringify(req.body));
-	console.log("Params: " + JSON.stringify(req.params));
-	console.log("Url:" + JSON.stringify(req.url));
-	console.log("Text:" + JSON.stringify(req.text));
-	console.log("Content:" + JSON.stringify(req.content));
-	console.log("Query:" + JSON.stringify(req.query));
+	console.log("Body: "    + JSON.stringify(req.body));
+	console.log("Params: "  + JSON.stringify(req.params));
+	console.log("Url:"      + JSON.stringify(req.url));
+	console.log("Text:"     + JSON.stringify(req.text));
+	console.log("Content:"  + JSON.stringify(req.content));
+	console.log("Query:"    + JSON.stringify(req.query));
 };
 
 module.exports = function (app, passport) {
 
+    /** loggedIn func from clementine.js. */
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
@@ -25,7 +26,6 @@ module.exports = function (app, passport) {
 		}
 	}
 
-	var clickHandler = new ClickHandler();
     var userController = new UserController();
 	var pollController = new PollController(path);
 
@@ -44,7 +44,7 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/public/login.html');
 		});
 
-    // If user logs out, return to main page
+    // If a user logs out, return to main page
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
@@ -81,7 +81,6 @@ module.exports = function (app, passport) {
 
     app.route('/polls/create')
         .post(isLoggedIn, function(req, res) {
-            reqDebug(req);
             pollController.addPoll(req, res);
         });
 
@@ -144,10 +143,4 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 
-    /*
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
-       */
 };
