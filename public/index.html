@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-
 <html>
 
 	<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
 		<title>Voting app for FreeCodeCamp</title>
 
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+
 	</head>
 
-	<header>
-		<p><span id="welcome-msg"></span></p>
-		<a class="menu" href="/profile">Profile</a>
-		<p>|</p>
-		<a class="menu" href="/login">Login</a>
-		<a class="menu" href="/logout">Logout</a>
-		<a class="menu" href="/signup">Signup</a>
-	</header>
-
 	<body>
+
+    <header>
+      <p><span id="welcome-msg"></span></p>
+      <a class="menu" href="/profile">Profile</a>
+      <p>|</p>
+      <a class="menu" href="/login">Login</a>
+      <a class="menu" href="/logout">Logout</a>
+      <a class="menu" href="/signup">Signup</a>
+    </header>
 
 		<div class="container">
 			<br />
@@ -27,18 +30,11 @@
 		<div class="container">
 
       <a href="/create">
-        <button class="btn btn-default">Create</button>
+        <button class="btn btn-success">New Poll</button>
       </a>
 
-      <ul id="list-of-polls">
-      </ul>
+      <ul id="list-of-polls"></ul>
 
-      <!--
-			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
-				<button class="btn btn-delete">RESET</button>
-			</div>
-      -->
 		</div>
 
 		<script type="text/javascript" src="common/ajax-functions.js"></script>
