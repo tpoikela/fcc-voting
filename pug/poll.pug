@@ -38,7 +38,7 @@ html
               button.btn.btn-default(type="submit") Vote!
 
           - if (isCreator)
-            form(method="DELETE" action="/polls/delete/" + pollID)
+            form(method="GET" action="/polls/delete/" + pollID)
               button.btn.btn-danger(type="submit") Delete Poll
 
           - if (isAuth)

@@ -97,7 +97,7 @@ module.exports = function (app, passport) {
         });
 
     app.route('/polls/delete/:id')
-        .post(function(req, res) {
+        .get(function(req, res) {
             pollController.deletePollById(req, res);
         });
 

@@ -1,0 +1,40 @@
+//- Main page of the app. Rendered HTML is decided by user login status
+
+- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+
+html
+  head
+    meta(http-equiv="content-type" content="text/html; charset=utf-8")
+
+    title FCC Voting App
+
+    link(href="" + bs rel="stylesheet" type="text/css")
+    link(href="/public/css/main.css" rel="stylesheet" type="text/css")
+
+  body
+
+    header
+      p
+        span#welcome-msg
+      - if (isAuth) {
+        a.menu(href="/profile") Profile
+        a.menu(href="/logout") Logout
+      - }
+      - else {
+        a.menu(href="/login") Login
+        a.menu(href="/signup") Signup
+      - }
+
+    div.container
+      p.clementine-text FCC Voting App
+
+    div.container.btn-container
+      a(href="/create")
+        button.btn.btn-success New Poll
+
+      ul#list-of-polls
+
+    script(type="text/javascript" src="common/ajax-functions.js")
+    script(type="text/javascript" src="controllers/userController.client.js")
+    script(type="text/javascript" src="controllers/pollController.client.js")
+
