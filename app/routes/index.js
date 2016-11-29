@@ -69,6 +69,11 @@ module.exports = function (app, passport) {
             userController.addUser(req, res);
         });
 
+
+    //---------------------------------------------
+    // Routes for creating/deleting/updating polls
+    //---------------------------------------------
+
     app.route('/polls')
         .get(function(req, res) {
             pollController.getPolls(req, res);
@@ -80,11 +85,30 @@ module.exports = function (app, passport) {
             pollController.addPoll(req, res);
         });
 
+    app.route('/polls/vote/:id')
+        .post(function(req, res) {
+            pollController.voteOnPoll(req, res);
+        });
+
+    app.route('/polls/update/:id')
+        .post(function(req, res) {
+            pollController.updatePollById(req, res);
+        });
+
+    app.route('/polls/delete/:id')
+        .post(function(req, res) {
+            pollController.deletePollById(req, res);
+        });
+
     app.route('/polls/:id')
         .get(function(req, res) {
             pollController.getPollById(req, res);
             //res.json(["aaaa", "bbbb"]);
         });
+
+    //--------------------------------------
+    // User registration and authentication
+    //--------------------------------------
 
 	app.route('/api/:id')
 		.get(function (req, res) {
@@ -120,8 +144,10 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 
+    /*
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
+       */
 };
