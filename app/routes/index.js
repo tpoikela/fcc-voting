@@ -31,7 +31,9 @@ module.exports = function (app, passport) {
 
 	app.route('/')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/index.html');
+            var isAuth = req.isAuthenticated();
+            res.render(path + "/pug/index.pug", 
+                {isAuth: isAuth});
 		});
 
 	app.route('/signup')
