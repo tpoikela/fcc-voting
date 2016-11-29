@@ -17,6 +17,12 @@
 
 <body>
 
+  <header>
+    <a class="menu" href="/">Home</a>
+    <a class="menu" href="/profile">Profile</a>
+    <a class="menu" href="/logout">Logout</a>
+  </header>
+
   <!-- Main content goes here -->
   <div class="container">
     <h1>Create a new poll</h1>
@@ -32,6 +38,8 @@
       <span class="label label-default">Option:</span>
       <input id="option-name-input" type="text" class="form-control" placeholder="Option name">
       <button id="add-option-button" class="btn btn-default">Add option</button>
+
+      <span id="poll-create-message"></span>
     </div>
 
     <div class="col-md-6">
