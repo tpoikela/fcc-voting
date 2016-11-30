@@ -63,6 +63,7 @@ header p {
 	color: #FF630D;
 }
 
+/** Applied to each p appearing after a in header.*/
 header a ~ p {
 	margin: 0;
 	padding: 0;
@@ -73,7 +74,6 @@ header a ~ p {
 #display-name {
 	font-weight: 400;
 }
-
 
 .login {
 	margin: 86px auto 0 auto;
@@ -118,13 +118,16 @@ img {
 .btn {
 	margin: 0 8px;
 	color: white;
-	background-color: #00BCD4;
 	border: 0;
 	font-size: 14px;
 	border-radius: 3px;
 	padding: 10px 5px;
 	width: 100px;
 	font-weight: 500;
+}
+
+.btn-clem {
+	background-color: #00BCD4;
 }
 
 .btn:focus {
@@ -142,12 +145,7 @@ img {
 	color: #212121;
 }
 
-#click-nbr {
-	font-weight: 400;
-}
-
-
-.github-profile {
+.user-profile {
 	width: 350px;
 	height: 200px;
 	border-radius: 3px;
@@ -157,15 +155,15 @@ img {
 	color: #000;
 }
 
-.github-profile p:first-child {
+.user-profile p:first-child {
 	padding-top: 16px;
 }
 
-.github-profile p:nth-child(5) {
+.user-profile p:nth-child(2) {
 	margin-bottom: 16px
 }
 
-.github-profile p {
+.user-profile p {
 	margin: 0 0 0 16px;
 	text-align: left;
 }
@@ -178,16 +176,11 @@ span {
 	font-weight: 500;
 }
 
-.github-profile > img {
-	padding-top: 16px;
-	margin-bottom: 16px;
-}
-
-.github-profile .menu:hover {
+.user-profile .menu:hover {
 	color: #FFA000;
 }
 
-.github-profile .menu:active {
+.user-profile .menu:active {
 	color: #FF630D;
 }
 
@@ -201,5 +194,13 @@ span {
     border: 1px solid black;
     border-radius: 20px;
     background-color: Orange;
-};
+    padding: 10px;
+}
 
+.create-poll-form {
+    margin-bottom: 15px;
+}
+
+#poll-create-message {
+    margin-top: 10px;
+}
