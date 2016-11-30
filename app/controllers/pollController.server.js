@@ -20,7 +20,8 @@ module.exports = function(path) {
     var updatePollDb = function(pollID, poll, cb) {
         var setOp = {$set: {
             "options.votes": poll.options.votes,
-            "options.names": poll.options.names
+            "options.names": poll.options.names,
+            "info.voters": poll.info.voters
         }};
         var opts = {};
 
@@ -154,18 +155,32 @@ module.exports = function(path) {
 
     /** Adds one vote to the poll. TODO prevent double-voting by the same user.*/
     this.voteOnPoll = function(req, res) {
+        var i = 0;
         var pollID = req.params.id;
         Poll.findOne({_id: pollID}, function(err, poll) {
             if (err) throw err;
 
             if ($DEBUG) {
                 console.log("voteOnPoll req.body: " + JSON.stringify(req.body));
+                console.log("Vote came from IP: " + req.ip);
             }
 
             var votedOption = req.body.option;
             var options = poll.options.names;
 
-            for (var i = 0; i < options.length; i++) {
+            // Check that no vote has come from this IP before
+            var voteIP = req.ip;
+            var voters = poll.info.voters;
+
+            for (i = 0; i < voters.length; i++) {
+                if (voters[i] === voteIP) {
+                    return res.json({msg: "You have already voted."});
+                }
+            }
+            poll.info.voters.push(voteIP);
+
+            // Find the voted option position and add a vote
+            for (i = 0; i < options.length; i++) {
                 if (votedOption === options[i]) {
                     poll.options.votes[i] += 1;
                     if ($DEBUG) {

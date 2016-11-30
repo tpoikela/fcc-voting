@@ -14,9 +14,6 @@ var User = new Schema({
         username: String,
         password: String,
     },
-    nbrClicks: {
-        clicks: Number
-    }
 });
 
 module.exports = mongoose.model('User', User);

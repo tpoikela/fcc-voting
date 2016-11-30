@@ -104,7 +104,6 @@ module.exports = function (app, passport) {
     app.route('/polls/:id')
         .get(function(req, res) {
             pollController.getPollById(req, res);
-            //res.json(["aaaa", "bbbb"]);
         });
 
     //--------------------------------------
