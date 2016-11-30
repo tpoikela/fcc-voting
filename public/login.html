@@ -12,13 +12,22 @@
 	</head>
 
 	<body>
+
+    <header>
+      <a class="menu" href="/">Home</a>
+    </header>
+
 		<div class="container">
-			<div class="login">
+
+    <div class="row">
+    <div class="col-md-3"> </div>
+
+			<div class="col-md-6 login">
+        <p class="clementine-text">FCC Voting app</p>
 				<br />
-				<p class="clementine-text">FCC Voting app</p>
 
 				<a href="/auth/github">
-					<div class="btn" id="login-btn">
+					<div class="btn btn-clem" id="login-btn">
 						<img src="/public/img/github_32px.png" alt="github logo" />
 						<p>LOGIN WITH GITHUB</p>
 					</div>
@@ -35,15 +44,15 @@
             <label for="userPasswordInput">Password</label>
             <input name="password" type="password" class="form-control" id="userPasswordInput" placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="submit" class="btn btn-clem">Submit</button>
         </form>
 
-			</div>
+      </div>
 
-      <!-- List of polls -->
+      <div class="col-md-3"> </div>
+    </div> <!-- row -->
 
-
-		</div>
+		</div> <!-- container -->
 	</body>
 
 </html>
