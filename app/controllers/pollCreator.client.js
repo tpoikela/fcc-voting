@@ -25,6 +25,12 @@
         return res;
     };
 
+    var clearUserEnteredData = function() {
+        optionList.innerHTML = "";
+        optionNameInput.value = "";
+        pollNameInput.value = "";
+    };
+
     /** Send a new poll to the server using POST.*/
     createButton.addEventListener("click", function() {
         var params    = "";
@@ -38,6 +44,7 @@
         var postCb = function(data) {
             if (data) {
                 var json = JSON.parse(data);
+                clearUserEnteredData();
                 pollCreateMsg.innerHTML = json.msg;
             }
         };
