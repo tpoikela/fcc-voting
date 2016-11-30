@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-
 <html>
 
 	<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<title>Voting app for FreeCodeCamp</title>
+
+    <link type="text/css" rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+
 	</head>
 
+  <header>
+    <a class="menu" href="/">Home</a>
+    <p id="menu-divide">|</p>
+    <a class="menu" href="/logout">Logout</a>
+  </header>
+
 	<body>
+
 		<div class="container">
-			<div class="github-profile">
-				<img src="/public/img/gh-mark-32px.png" alt="github logo" />
-				<p><span>ID: </span><span id="profile-id" class="profile-value"></span></p>
+			<div class="user-profile">
+
 				<p><span>Username: </span><span id="profile-username" class="profile-value"></span></p>
-				<p><span>Display Name: </span><span id="display-name" class="profile-value"></span></p>
-				<p><span>Repositories: </span><span id="profile-repos" class="profile-value"></span></p>
-				<a class="menu" href="/">Home</a>
-				<p id="menu-divide">|</p>
-				<a class="menu" href="/logout">Logout</a>
+				<p><span>Polls created: </span><span id="profile-username" class="profile-value"></span></p>
 			</div>
 		</div>
 
