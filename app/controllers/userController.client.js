@@ -10,7 +10,7 @@
 
    /** Updates HTML element with given data and property.*/
    function updateHtmlElement (data, element, userProperty) {
-       if (data.hasOwnProperty(userPropert)) {
+       if (data.hasOwnProperty(userProperty)) {
            element.innerHTML = data[userProperty];
        }
        else {
@@ -37,18 +37,11 @@
 
       console.log("Data is " + data);
       var userObject = JSON.parse(data);
-      setWelcomeMsg(userObject);
 
-      if (profileId !== null) {
-         updateHtmlElement(userObject, profileId, 'id');
-      }
+      if (welcomeMsg !== null) setWelcomeMsg(userObject);
 
       if (profileUsername !== null) {
          updateHtmlElement(userObject, profileUsername, 'username');
-      }
-
-      if (profileRepos !== null) {
-         updateHtmlElement(userObject, profileRepos, 'publicRepos');
       }
 
    }));
