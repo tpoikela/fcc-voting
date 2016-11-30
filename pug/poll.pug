@@ -35,16 +35,17 @@ html
                   label= options[i]
                   input(type="radio" name="option" value="" + options[i])
               -}
-              button.btn.btn-default(type="submit") Vote!
+              button.btn.btn-clem(type="submit") Vote!
 
           - if (isCreator)
             form(method="GET" action="/polls/delete/" + pollID)
-              button.btn.btn-danger(type="submit") Delete Poll
+              button.btn.btn-delete(type="submit") Delete Poll
 
           - if (isAuth)
+            p As a registered user, feel free to create a new voting option:
             form(method="POST" action="/polls/update/" + pollID)
               input.form-control#optionField(name="option" type="text" placeholder="Option")
-              button.btn.btn-default(type="submit") Add Option
+              button.btn.btn-clem(type="submit") Add Option
 
         //- This part shows the poll results as a chart
         div.col-md-5.poll-page-box
