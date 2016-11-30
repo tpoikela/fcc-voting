@@ -5,6 +5,7 @@
 
     var pollList = document.querySelector("#list-of-polls");
     var apiUrl = appUrl + '/polls';
+    var style = "class='list-group-item'";
 
     ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
         var polls = JSON.parse(data);
@@ -13,7 +14,8 @@
             var html = "";
             for (var i = 0; i < polls.length; i++) {
                 var id  = polls[i]._id;
-                var link = '<a href="' + apiUrl + '/' + id + '">';
+                var link = '<a href="' + apiUrl + '/' + id + '" ' + 
+                    style + '>';
                 html += link + '<p id="' + id + '">' + polls[i].name + '</p>' + '</a>'
             }
             pollList.innerHTML = html;
