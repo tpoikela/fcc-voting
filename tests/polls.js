@@ -33,4 +33,11 @@ describe('Poll objects', function() {
 
     });
 
+    it('can contain valid voter names', function() {
+        var poll = new Poll();
+        poll.info.voters = ["<a<<", "c", "bb"];
+        var error = poll.validateSync();
+        expect(error.errors["info.voters"]).to.not.equal(undefined);
+    });
+
 });

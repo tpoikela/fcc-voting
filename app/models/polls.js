@@ -45,7 +45,14 @@ var Poll = new Schema({
                 message: "Creator name cannot contain < or >.",
             },
         },
-        voters: [String],
+        voters: {
+            type: [String],
+            validate: {
+                validator: arrayNameValidator,
+                message: "Voter name cannot contain < or >.",
+            },
+        },
+
     },
 });
 
