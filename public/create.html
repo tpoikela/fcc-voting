@@ -30,20 +30,24 @@
     <div class="row">
 
     <div class="col-md-6">
-      <button id="create-button" class="btn btn-success">Create</button>
 
-      <p>Name:</p>
-      <input id="poll-name-input" type="text" class="form-control" placeholder="Poll name">
+      <div class="create-poll-form">
 
-      <span class="label label-default">Option:</span>
-      <input id="option-name-input" type="text" class="form-control" placeholder="Option name">
-      <button id="add-option-button" class="btn btn-default">Add option</button>
+        <span class="label label-default">Poll name:</span>
+        <input id="poll-name-input" type="text" class="form-control" placeholder="Poll name">
+
+        <span class="label label-default">Option:</span>
+        <input id="option-name-input" type="text" class="form-control" placeholder="Option name">
+      </div>
+
+      <button id="add-option-button" class="btn btn-primary">Add option</button>
+      <button id="create-button" class="btn btn-success">Create poll</button></br>
 
       <span id="poll-create-message"></span>
     </div>
 
     <div class="col-md-6">
-      <p>Options:</p>
+      <h2>Poll options:</h2>
       <ul id="options-list"></ul>
     </div>
 
