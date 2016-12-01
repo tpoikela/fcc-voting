@@ -115,10 +115,11 @@ module.exports = function (app, passport) {
             if (req.isAuthenticated()) {
                 console.log("Req auth, user " + JSON.stringify(req.user));
                 if (req.user.github.username) {
-                    res.json(req.user.github);
+                    res.json({username: req.user.github.username});
                 }
                 else if (req.user.local.username) {
-                    res.json(req.user.local);
+                    console.log("Sending data now");
+                    res.json({username: req.user.local.username});
                 }
                 else
                     res.sendStatus(400); // Something went wrong terribly
