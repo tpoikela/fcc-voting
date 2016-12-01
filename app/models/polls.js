@@ -4,10 +4,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/** Validates a name.*/
 var nameValidator = function(v) {
     return /^[^<>]+$/.test(v);
 };
 
+/** Validates all names within an array. Returns true if OK.*/
 var arrayNameValidator = function(arr) {
     for (var i = 0; i < arr.length; i++) {
         if (!nameValidator(arr[i])) return false;
@@ -15,9 +17,10 @@ var arrayNameValidator = function(arr) {
     return true;
 };
 
+/** Schema for one poll in the database.*/
 var Poll = new Schema({
     name: {
-        type: String, 
+        type: String,
         required: [true, "Poll name required"],
         validate: {
             validator: nameValidator,
