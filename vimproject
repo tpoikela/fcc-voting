@@ -46,7 +46,6 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
   }
   common=common {
    ajax-functions.js
-   poll.js
   }
  }
  node_modules=node_modules {
