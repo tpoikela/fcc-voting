@@ -2,10 +2,15 @@
 const url = require('url');
 
 const Poll = require("../models/polls.js");
+const User = require("../models/users.js");
 
 module.exports = function(path) {
 
     var $DEBUG = 1;
+
+    var handleError = function(err, res) {
+        return res.sendStatus(500);
+    };
 
     /** Returns true is request came from poll's creator.*/
     var isPollCreator = function(req, poll) {
@@ -17,6 +22,7 @@ module.exports = function(path) {
         }
     };
 
+    /** Updates a poll entry in the database.*/
     var updatePollDb = function(pollID, poll, cb) {
         var setOp = {$set: {
             "options.votes": poll.options.votes,
@@ -32,10 +38,33 @@ module.exports = function(path) {
 
     };
 
-    /** Finds all polls from the database and returns their name.*/
+    /** Removes a poll from a user.*/
+    var removePollFromUser = function(poll, user, cb) {
+        User.findOne({_id: user._id}, function(err, userResult) {
+            if (err) return cb(err);
+
+            var index = userResult.polls.indexOf(poll._id);
+            if (index >= 0) {
+                userResult.polls.slice(index);
+
+                var setOpt = {$set: {
+                    polls: userResult.polls,
+                }};
+
+                User.update({_id: userResult._id}, setOpt, {}, function(err) {
+                    if (err) return cb(err);
+                    //res.json({msg: "New poll has been created."});
+                    cb(null); // No error, everything OK
+                });
+            }
+
+        });
+    };
+
+    /** Finds all polls from the database and returns their names and IDs.*/
     this.getPolls = function(req, res) {
         Poll.find({}, {name: 1, _id: 1}, function(err, result) {
-            if (err) throw err;
+            if (err) return handleError(err, res);
             if ($DEBUG) console.log("getPolls: " + JSON.stringify(result));
             res.json(result);
         });
@@ -62,8 +91,25 @@ module.exports = function(path) {
             "addPoll: Saving new poll: " + JSON.stringify(poll));
 
         poll.save(function(err) {
-            if (err) throw err;
-            res.json({msg: "New poll has been created."});
+            if (err) return handleError(err, res);
+            console.log("addPoll ID is " + poll._id);
+
+            // Correct thing would be to remove poll on error because otherwise
+            // Poll and User data are inconsistent
+            User.findOne({_id: user._id}, function(err, result) {
+                if (err) return handleError(err, res);
+
+                result.polls.push(poll._id);
+                var setOpt = {$set: {
+                    polls: result.polls,
+                }};
+
+                User.update({_id:result._id}, setOpt, {}, function(err) {
+                    if (err) return handleError(err, res);
+                    res.json({msg: "New poll has been created."});
+                });
+
+            });
         });
 
 	};
@@ -74,7 +120,7 @@ module.exports = function(path) {
         if (req.params.id) {
             var pollID = req.params.id;
             Poll.findOne({_id: pollID}, function(err, result) {
-                if (err) throw err;
+                if (err) return handleError(err, res);
 
                 if (result) {
                     if ($DEBUG) console.log("getPollByID: " + JSON.stringify(result));
@@ -106,13 +152,13 @@ module.exports = function(path) {
         var pollID = req.params.id;
         if (isAuth && pollID) {
             Poll.findOne({_id: pollID}, function(err, poll) {
-                if (err) throw err;
+                if (err) return handleError(err, res);
 
                 var optName = req.body.option;
                 poll.options.names.push(optName);
                 poll.options.votes.push(0);
                 updatePollDb(pollID, poll, function(err) {
-                    if (err) throw err;
+                    if (err) return handleError(err, res);
                     res.redirect("/polls/" + pollID);
                 });
 
@@ -129,16 +175,21 @@ module.exports = function(path) {
     this.deletePollById = function(req, res) {
         var isAuth = req.isAuthenticated();
         var pollID = req.params.id;
+        var user = req.user;
         if (pollID && isAuth) {
-            Poll.findOne({_id: pollID}, function(err, result) {
-                if (err) throw err;
+            Poll.findOne({_id: pollID}, function(err, pollResult) {
+                if (err) return handleError(err, res);
 
                 if ($DEBUG) console.log(
-                    "deletePollByID: " + JSON.stringify(result));
+                    "deletePollByID: " + JSON.stringify(pollResult));
 
-                if (isPollCreator(req, result)) {
-                    Poll.remove({_id:pollID}, function(err) {
-                        if (err) throw err;
+                if (isPollCreator(req, pollResult)) {
+                    Poll.remove({_id: pollID}, function(err) {
+                        if (err) return handleError(err, res);
+
+                        removePollFromUser(pollResult, user, function(err) {
+
+                        });
                         // TODO add nice msg about poll deletion
                         res.redirect("/");
                     });
@@ -158,7 +209,7 @@ module.exports = function(path) {
         var i = 0;
         var pollID = req.params.id;
         Poll.findOne({_id: pollID}, function(err, poll) {
-            if (err) throw err;
+            if (err) return handleError(err, res);
 
             if ($DEBUG) {
                 console.log("voteOnPoll req.body: " + JSON.stringify(req.body));
@@ -168,16 +219,13 @@ module.exports = function(path) {
             var votedOption = req.body.option;
             var options = poll.options.names;
 
-            // Check that no vote has come from this IP before
+            // Check that no vote came from the IP before
             var voteIP = req.ip;
             var voters = poll.info.voters;
+            var index = voters.indexOf(voteIP);
 
-            for (i = 0; i < voters.length; i++) {
-                if (voters[i] === voteIP) {
-                    return res.json({msg: "You have already voted."});
-                }
-            }
-            poll.info.voters.push(voteIP);
+            if (index >= 0) return res.json({msg: "You have already voted."});
+            else poll.info.voters.push(voteIP);
 
             // Find the voted option position and add a vote
             for (i = 0; i < options.length; i++) {
@@ -190,7 +238,7 @@ module.exports = function(path) {
             }
 
             updatePollDb(pollID, poll, function(err){
-                if (err) throw err;
+                if (err) return handleError(err, res);
                 res.redirect("/polls/" + pollID);
             });
 
