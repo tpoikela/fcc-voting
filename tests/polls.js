@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const Poll = require("../app/models/polls.js");
 
-describe('Poll objects', function() {
+describe('Poll Schema', function() {
 
     it('should have a name', function() {
         var poll = new Poll();

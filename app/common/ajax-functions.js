@@ -3,34 +3,33 @@
 var appUrl = window.location.origin;
 
 var ajaxFunctions = {
-   ready: function ready (fn) {
-      if (typeof fn !== 'function') {
-         return;
-      }
 
-      if (document.readyState === 'complete') {
-         return fn();
-      }
 
-      document.addEventListener('DOMContentLoaded', fn, false);
-   },
+    ready: function ready (fn) {
+        if (typeof fn !== 'function') return;
+        if (document.readyState === 'complete') return fn();
 
-   ajaxRequest: function ajaxRequest (method, url, callback, params) {
-      var xmlhttp = new XMLHttpRequest();
+        document.addEventListener('DOMContentLoaded', fn, false);
+    },
 
-      xmlhttp.onreadystatechange = function () {
-         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            callback(xmlhttp.response);
-         }
-      };
+    /** Performs an Ajax request based on method args.*/
+    ajaxRequest: function ajaxRequest (method, url, callback, params) {
+        var xmlhttp = new XMLHttpRequest();
 
-      xmlhttp.open(method, url, true);
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+               callback(xmlhttp.response);
+            }
+        };
 
-      if (params) {
-          xmlhttp.setRequestHeader("Content-type", 
-              "application/x-www-form-urlencoded");
-          xmlhttp.send(params);
-      }
-      else xmlhttp.send();
-   }
+        xmlhttp.open(method, url, true);
+
+        if (params) {
+            xmlhttp.setRequestHeader("Content-type", 
+                "application/x-www-form-urlencoded");
+            xmlhttp.send(params);
+        }
+        else xmlhttp.send();
+    }
 };
+
