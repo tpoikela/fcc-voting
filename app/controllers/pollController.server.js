@@ -15,7 +15,7 @@ module.exports = function(path) {
     /** Returns true is request came from poll's creator.*/
     var isPollCreator = function(req, poll) {
         if (req.hasOwnProperty("user")) {
-            return req.user.local.username === poll.info.creator;
+            return req.user.username === poll.info.creator;
         }
         else {
             return false;
@@ -74,7 +74,7 @@ module.exports = function(path) {
 	this.addPoll = function(req, res) {
         var user = req.user;
         var poll = new Poll();
-        poll.info.creator = user.local.username;
+        poll.info.creator = user.username;
 
         // Extract name and options from post-request
         poll.name = req.body.name;
