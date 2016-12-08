@@ -24,6 +24,7 @@ module.exports = function (passport) {
 	},
 	function (token, refreshToken, profile, done) {
 		process.nextTick(function () {
+            var username = profile.username;
 			User.findOne({ 'github.id': profile.id }, function (err, user) {
 				if (err) {
 					return done(err);
@@ -32,39 +33,51 @@ module.exports = function (passport) {
 				if (user) {
 					return done(null, user);
 				} else {
-					var newUser = new User();
 
-					newUser.github.id = profile.id;
-					newUser.github.username = profile.username;
-					newUser.github.displayName = profile.displayName;
-					newUser.github.publicRepos = profile._json.public_repos;
-					newUser.nbrClicks.clicks = 0;
+                    // Must check if a user with same name exists in local
+                    User.findOne({'username': username}, function(err, user) {
+                        if (!user) {
+                            var newUser = new User();
 
-					newUser.save(function (err) {
-						if (err) {
-							throw err;
-						}
+                            newUser.username = profile.username;
+                            newUser.github.id = profile.id;
+                            newUser.github.username = profile.username;
+                            newUser.github.displayName = profile.displayName;
 
-						return done(null, newUser);
-					});
+                            newUser.save(function (err) {
+                                if (err) throw err;
+
+                                return done(null, newUser);
+                            });
+                        }
+                        else {
+                            console.log("Cannot accept github.id Local user exists");
+                            return done(null, false);
+                        }
+
+                    });
+
+
 				}
 			});
 		});
 	}));
 
-	// Strategy for local verification
+	// Strategy for local password verification
     passport.use(new LocalStrategy({
+
 		// These are defaults, so no need to specify them
 		//userNameField: "username",
 		//passwordField: "password",
 		//passReqToCallback: true,
+
 		session: true,
 		},
 		function(username, password, done) {
 			User.findOne({"local.username": username}, function(err, user) {
 			  if (err) { return done(err); }
 			  if (!user) { return done(null, false); }
-			  if (user.local.password != password) { return cb(null, false); }
+			  if (user.local.password !== password) { return done(null, false); }
 			  return done(null, user);
 			});
 		}
