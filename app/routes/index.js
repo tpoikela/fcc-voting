@@ -72,9 +72,9 @@ module.exports = function (app, passport) {
         });
 
 
-    //---------------------------------------------
-    // Routes for creating/deleting/updating polls
-    //---------------------------------------------
+    //----------------------------------------------------
+    // Routes for getting/creating/deleting/updating polls
+    //----------------------------------------------------
 
     app.route('/polls')
         .get(function(req, res) {
@@ -112,21 +112,7 @@ module.exports = function (app, passport) {
 
 	app.route('/api/:id')
 		.get(function (req, res) {
-            if (req.isAuthenticated()) {
-                console.log("Req auth, user " + JSON.stringify(req.user));
-                if (req.user.github.username) {
-                    res.json({username: req.user.github.username});
-                }
-                else if (req.user.local.username) {
-                    console.log("Sending data now");
-                    res.json({username: req.user.local.username});
-                }
-                else
-                    res.sendStatus(400); // Something went wrong terribly
-            }
-            else {
-                res.json({name: "guest"});
-            }
+            userController.getUser(req, res);
 		});
 
     // Logs user in via form (after successful authentication

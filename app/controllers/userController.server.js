@@ -36,5 +36,25 @@ module.exports = function() {
         }
     };
 
+    /** Returns info about the requested user (if authenticated).*/
+    this.getUser = function(req, res) {
+        if (req.isAuthenticated()) {
+            console.log("Req auth, user " + JSON.stringify(req.user));
+            if (req.user.github.username) {
+                res.json({username: req.user.github.username});
+            }
+            else if (req.user.local.username) {
+                console.log("Sending data now");
+                res.json({username: req.user.local.username});
+            }
+            else
+                res.sendStatus(400); // Something went wrong terribly
+        }
+        else {
+            res.json({name: "guest"});
+        }
+
+    };
+
 };
 
