@@ -2,11 +2,15 @@
 
 (function () {
 
+   var pollUrl = appUrl + '/polls';
+
    var profileId = document.querySelector('#profile-id') || null;
    var profileUsername = document.querySelector('#profile-username') || null;
    var profileRepos = document.querySelector('#profile-repos') || null;
    var welcomeMsg = document.querySelector('#welcome-msg');
    var apiUrl = appUrl + '/api/:id';
+
+   var profilePollList = document.querySelector('#profile-poll-list') || null;
 
    /** Updates HTML element with given data and property.*/
    function updateHtmlElement (data, element, userProperty) {
@@ -31,6 +35,22 @@
       }
    }
 
+   /** Creates a list of poll items.*/
+   function createProfilePollList(polls) {
+       var i = 0;
+       for (i = 0; i < polls.length; i++) {
+           var pollName = polls[i].name;
+           var pollID = polls[i]._id;
+           var pollLink = '<a href="' + pollUrl + '/' + pollID + '">' + pollName +
+               '</a>';
+
+           var pollItem = document.createElement('li');
+           pollItem.innerHTML = pollLink;
+
+           profilePollList.appendChild(pollItem);
+       }
+   };
+
    /** Requests user data via ajax-get. */
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (err, data) {
       if (err) throw new Error(err);
@@ -43,6 +63,10 @@
 
       if (profileUsername !== null) {
          updateHtmlElement(userObject, profileUsername, 'username');
+      }
+
+      if (profilePollList !== null) {
+          createProfilePollList(userObject.polls);
       }
 
    }));
