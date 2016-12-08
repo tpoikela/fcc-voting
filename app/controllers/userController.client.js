@@ -32,7 +32,8 @@
    }
 
    /** Requests user data via ajax-get. */
-   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
+   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (err, data) {
+      if (err) throw new Error(err);
 	  if (!data) return;
 
       console.log("Data is " + data);

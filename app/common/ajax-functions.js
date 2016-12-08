@@ -4,7 +4,6 @@ var appUrl = window.location.origin;
 
 var ajaxFunctions = {
 
-
     ready: function ready (fn) {
         if (typeof fn !== 'function') return;
         if (document.readyState === 'complete') return fn();
@@ -18,7 +17,10 @@ var ajaxFunctions = {
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-               callback(xmlhttp.response);
+               callback(null, xmlhttp.response);
+            }
+            else if (xmlhttp.readyState === 4) {
+               callback(xmlhttp.status);
             }
         };
 

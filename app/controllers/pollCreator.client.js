@@ -41,11 +41,14 @@
         console.log("Params are: " + params);
 
         // Callback called after POST finishes
-        var postCb = function(data) {
-            if (data) {
-                var json = JSON.parse(data);
-                clearUserEnteredData();
-                pollCreateMsg.innerHTML = json.msg;
+        var postCb = function(err, data) {
+            if (err) throw new Error(err);
+            else {
+                if (data) {
+                    var json = JSON.parse(data);
+                    clearUserEnteredData();
+                    pollCreateMsg.innerHTML = json.msg;
+                }
             }
         };
 
