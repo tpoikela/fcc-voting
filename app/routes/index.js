@@ -68,7 +68,7 @@ module.exports = function (app, passport) {
         .post(function(req, res) {
             console.log("Got a signup form GET request..");
 			reqDebug(req);
-            userController.addUser(req, res);
+            userController.addLocalUser(req, res);
         });
 
 
