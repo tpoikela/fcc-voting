@@ -46,6 +46,7 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
   }
   common=common {
    ajax-functions.js
+   validation.js
   }
  }
  node_modules=node_modules {
@@ -104,6 +105,18 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
    gh-mark-32px.png
    github_32px.png
   }
+ }
+ pug=pug {
+  index.pug
+  invalid_poll.pug
+  poll.pug
+ }
+ tests=tests {
+  ajax-functions.js
+  ajax.html
+  polls.js
+  users.js
+  validation.js
  }
 }
 
