@@ -4,18 +4,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-/** Validates a name.*/
-var nameValidator = function(v) {
-    return /^[^<>]+$/.test(v);
-};
-
-/** Validates all names within an array. Returns true if OK.*/
-var arrayNameValidator = function(arr) {
-    for (var i = 0; i < arr.length; i++) {
-        if (!nameValidator(arr[i])) return false;
-    }
-    return true;
-};
+var Validation = require('../common/validation.js');
+var nameValidator = Validation.validateName;
+var arrayNameValidator = Validation.validateNameArray;
 
 /** Schema for one poll in the database.*/
 var Poll = new Schema({
