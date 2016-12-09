@@ -1,5 +1,6 @@
 
 
+/** A module for validation names and passwords. */
 module.exports = {
 
     minPasswordLen: 1,

@@ -1,8 +1,15 @@
 
+var path = process.cwd();
+
 // Used for MongoDB access
 var User = require('../models/users.js');
 
 module.exports = function() {
+
+    var errorHandler = function(err, res) {
+        console.error("Server error: " + err);
+        res.sendStatus(500);
+    };
 
     // Adds one user to the database. Fails if a user exists already. This is
     // used only for local registration. github users are added in passport.js
@@ -11,7 +18,7 @@ module.exports = function() {
         var password = req.body.password;
         if (username && password) {
             User.findOne({"username": username}, function(err, user) {
-                if (err) throw err;
+                if (err) return errorHandler(err, res);
 
                 // If user doesn't exist, create new one and store into DB
                 if (!user) {
@@ -21,14 +28,17 @@ module.exports = function() {
                     newUser.local.password = password;
 
                     newUser.save(function(err) {
-                        if (err) throw err;
+                        if (err) return errorHandler(err, res);
                         console.log("Register local user " + username + " with pw " + password);
-                        res.json({msg: "Username " + username + " registered successfully."});
+                        //res.json({msg: "Username " + username + " registered successfully."});
+                        res.render(path + "/pug/signup.pug", 
+                            {ok: true, name: username});
                     });
 
                 }
                 else {
-                    res.json({error: "Username already taken."});
+                    res.render(path + "/pug/signup.pug", 
+                        {ok: false, name: username});
                 }
             });
         }
@@ -42,7 +52,7 @@ module.exports = function() {
         User.findOne({"username": username})
             .populate("polls")
             .exec(function(err, user) {
-                if (err) throw err;
+                if (err) return errorHandler(err, res);
 
                 if (user) {
                     res.json(user);
