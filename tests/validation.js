@@ -5,7 +5,9 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const V = require("../app/common/validation");
+const Validation = require("../app/common/validation");
+
+var V = new Validation();
 
 describe('Validation module', function() {
 
