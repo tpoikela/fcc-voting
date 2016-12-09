@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Validation = require('../common/validation.js');
-var nameValidator = Validation.validateName;
-var arrayNameValidator = Validation.validateNameArray;
+
+var validator = new Validation();
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -17,7 +17,7 @@ var User = new Schema({
         required: true,
         type: String,
         validate: {
-            validator: nameValidator,
+            validator: validator.validateName,
             message: "Name cannot contain < or >",
         },
     },
