@@ -88,10 +88,16 @@ module.exports = function(path) {
         poll.options.votes = votes;
 
         if ($DEBUG) console.log(
-            "addPoll: Saving new poll: " + JSON.stringify(poll));
+            "addPoll: BEFORE saving new poll: " + JSON.stringify(poll));
 
         poll.save(function(err) {
-            if (err) return handleError(err, res);
+            if (err) {
+                if ($DEBUG) {
+                    console.log("addPoll save had errors");
+                }
+                return handleError(err, res);
+            }
+
             console.log("addPoll ID is " + poll._id);
 
             // Correct thing would be to remove poll on error because otherwise
