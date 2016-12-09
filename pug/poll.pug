@@ -16,7 +16,16 @@ html
   body
 
     header
-      a.menu(href="/") Home
+      p
+        a.menu(href="/") Home
+        - if (isAuth) {
+          a.menu(href="/profile") Profile
+          a.menu(href="/logout") Logout
+        - }
+        - else {
+          a.menu(href="/login") Login
+          a.menu(href="/signup") Signup
+        - }
 
     div.container
       div.row
@@ -25,7 +34,10 @@ html
         //- This part handles data input from users
         div.col-md-5.poll-page-box
           h1= pollName
-          p Test paragraph
+
+          - if (isCreator)
+            form(method="GET" action="/polls/delete/" + pollID)
+              button.btn.btn-delete.btn-danger(type="submit") Delete Poll
 
           //- Generate voting options for the user.
           div.voting-radio-buttons
@@ -37,19 +49,17 @@ html
               -}
               button.btn.btn-clem(type="submit") Vote!
 
-          - if (isCreator)
-            form(method="GET" action="/polls/delete/" + pollID)
-              button.btn.btn-delete(type="submit") Delete Poll
 
           - if (isAuth)
             p As a registered user, feel free to create a new voting option:
             form(method="POST" action="/polls/update/" + pollID)
-              input.form-control#optionField(name="option" type="text" placeholder="Option")
+              input.form-control#optionField(
+              name="option" type="text" placeholder="Option" pattern="^[^<>/]+$")
               button.btn.btn-clem(type="submit") Add Option
 
         //- This part shows the poll results as a chart
-        div.col-md-5.poll-page-box
-          p Another test paragraph
+        div.col-md-5.poll-page-box#poll-chart
+          p Chart of the poll data should be shown here
           p Show poll results here
           ul
             - for (var i = 0; i < options.length; i++) {
