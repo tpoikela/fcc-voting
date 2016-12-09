@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "test": "mocha tests/polls.js tests/users.js tests/validation.js"
+    "test": "mocha tests/*Test.js"
   },
   "author": "Tuomas Poikela",
   "license": "MIT",

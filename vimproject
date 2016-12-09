@@ -47,6 +47,7 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
   common=common {
    ajax-functions.js
    validation.js
+   gen_chart.js
   }
  }
  node_modules=node_modules {
@@ -114,9 +115,9 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
  tests=tests {
   ajax-functions.js
   ajax.html
-  polls.js
-  users.js
-  validation.js
+  pollsTest.js
+  usersTest.js
+  validationTest.js
  }
 }
 
