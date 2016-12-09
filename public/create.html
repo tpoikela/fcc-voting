@@ -34,10 +34,13 @@
       <div class="create-poll-form">
 
         <span class="label label-default">Poll name:</span>
-        <input id="poll-name-input" type="text" class="form-control" placeholder="Poll name">
+        <input id="poll-name-input" type="text" class="form-control" 
+        placeholder="Poll name" pattern="^[^<>/]+$" title="No <,/ or > in poll name"
+        required=required>
 
         <span class="label label-default">Option:</span>
-        <input id="option-name-input" type="text" class="form-control" placeholder="Option name">
+        <input id="option-name-input" type="text" class="form-control" 
+          placeholder="Option name" pattern="^[^<>/]+$" title="No <,/ or > in option name">
       </div>
 
       <button id="add-option-button" class="btn btn-primary">Add option</button>
