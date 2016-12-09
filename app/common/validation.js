@@ -1,32 +1,34 @@
 
 
 /** A module for validation names and passwords. */
-module.exports = {
+module.exports = function() {
 
-    minPasswordLen: 1,
+    var minPasswordLen =  1;
 
-    validateName: function(name) {
+    this.validateName = function(name) {
         if (name === null) return false;
         if (typeof name === "string") {
             return /^[^<>]+$/.test(name);
         }
         return false;
-    },
+    };
 
-    validateNameArray: function(arr) {
+    var validateName = this.validateName;
+
+    this.validateNameArray = function(arr) {
         for (var i = 0; i < arr.length; i++) {
-            if (!this.validateName(arr[i])) return false;
+            if (!validateName(arr[i])) return false;
         }
         return true;
-    },
+    };
 
-    validatePassword: function(pw) {
+    this.validatePassword = function(pw) {
         if (pw === null) return false;
         if (typeof pw === "string") {
-            return pw.length >= this.minPasswordLen;
+            return pw.length >= minPasswordLen;
         }
         return false;
 
-    },
+    };
 
 };
