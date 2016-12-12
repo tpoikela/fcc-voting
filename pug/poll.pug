@@ -2,7 +2,7 @@
 //- 1. If a user is authenticated, adds "Add Option" button
 //- 2. If a user is the poll creator, add a Delete Button as well
 
-- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+include mixins.pug
 
 html
   head
@@ -13,22 +13,12 @@ html
     script(src="https://d3js.org/d3.v4.min.js")
     script(src="/common/gen_chart.js")
 
-    link(href="" + bs rel="stylesheet" type="text/css")
-    link(href="/public/css/main.css" rel="stylesheet" type="text/css")
+    +styleSheets()
 
   body
 
-    header
-      p
-        a.menu(href="/") Home
-        - if (isAuth) {
-          a.menu(href="/profile") Profile
-          a.menu(href="/logout") Logout
-        - }
-        - else {
-          a.menu(href="/login") Login
-          a.menu(href="/signup") Signup
-        - }
+    +topMenu("poll")
+    +appTitle()
 
     div.container
       div.row
@@ -71,6 +61,8 @@ html
               -}
           -}
         div.col-md-1
+
+    +appFooter()
 
     script(type="text/javascript" src="/common/ajax-functions.js")
     script(type="text/javascript" src="/controllers/pollController.client.js")

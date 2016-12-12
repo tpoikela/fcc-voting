@@ -1,0 +1,40 @@
+//- This file contains mixins used in all .pug files. This helps making layouts
+//- more unified across all different pages.
+
+- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+
+mixin styleSheets()
+    link(href="" + bs rel="stylesheet" type="text/css")
+    link(href="/public/css/main.css" rel="stylesheet" type="text/css")
+
+mixin pageHead()
+  head
+    meta(http-equiv="content-type" content="text/html; charset=utf-8")
+    title FCC Voting App
+    +styleSheets()
+
+mixin topMenu(title)
+  header
+    p
+      span#welcome-msg
+    a.menu(href="/") Home
+    - if (isAuth) {
+      a.menu(href="/profile") Profile
+      a.menu(href="/logout") Logout
+    - }
+    - else {
+      a.menu(href="/login") Login
+      a.menu(href="/signup") Signup
+    - }
+
+mixin appTitle()
+  div.container
+    p.clementine-text FCC Voting App
+
+mixin pageMainContent()
+  p Not implemented yet
+
+mixin appFooter()
+  footer.container
+    p
+      a.author(href="www.freecodecamp.com/tpoikela") tpoikela

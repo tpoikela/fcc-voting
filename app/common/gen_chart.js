@@ -7,7 +7,7 @@ function genPollChart(elemID, choices, votes, opts) {
     var $DEBUG = opts.$DEBUG || 0;
 
     var maxWidth = 400;
-    var maxHeight = opts.height || 640;
+    var maxHeight = opts.height || 560;
 	var margin = opts.margin || {top: 10, left: 10, right: 10, bottom: 20};
 
     var chartDiv = d3.select(elemID) || null;
