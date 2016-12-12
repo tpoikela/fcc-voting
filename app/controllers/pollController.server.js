@@ -70,6 +70,20 @@ module.exports = function(path) {
         });
     };
 
+    /** Returns poll information as JSON.*/
+    this.getPollAsJSON = function(req, res) {
+        if (req.params.id) {
+            var pollID = req.params.id;
+            Poll.findOne({_id: pollID}, function(err, result) {
+                if (err) return handleError(err, res);
+                res.json(result);
+            });
+        }
+        else {
+            res.sendStatus(400);
+        }
+    };
+
 	/** Adds one poll into the database. */
 	this.addPoll = function(req, res) {
         var user = req.user;

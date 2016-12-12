@@ -101,6 +101,11 @@ module.exports = function (app, passport) {
             pollController.deletePollById(req, res);
         });
 
+    app.route('/polls/getpolls/:id')
+        .get(function(req, res) {
+            pollController.getPollAsJSON(req, res);
+        });
+
     app.route('/polls/:id')
         .get(function(req, res) {
             pollController.getPollById(req, res);

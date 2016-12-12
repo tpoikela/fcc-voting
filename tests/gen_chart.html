@@ -52,7 +52,7 @@
 
     <div class="col-md-5" id="poll-chart">
       <!--<svg width="960" height="700" class="svg-class"></svg>-->
-      <svg height="640" class="svg-class"></svg>
+      <!--<svg height="640" class="svg-class"></svg>-->
     </div>
 
     <div class="col-md-1" style="background-color: red;" ></div>
@@ -65,7 +65,7 @@
     $(document).ready( function () {
       var options = ["a", "b", "c", "d"];
       var votes   = [10, 1, 30, 12];
-      genPollChart(options, votes);
+      genPollChart('#poll-chart', options, votes);
     });
   </script>
 

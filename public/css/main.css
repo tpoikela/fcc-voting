@@ -301,4 +301,10 @@ span {
 #poll-create-message {
     margin-top: 10px;
 }
+
+.vote-label {
+    fill: white;
+
 }
+
+

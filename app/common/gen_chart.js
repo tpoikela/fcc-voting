@@ -1,32 +1,38 @@
 
 /** Script to generate the charts for poll results. */
 
+function genPollChart(elemID, choices, votes, opts) {
+    opts = opts || {};
 
-function genPollChart(options, votes) {
+    var $DEBUG = opts.$DEBUG || 0;
+
     var maxWidth = 400;
-    var maxHeight = 600;
-	var barHeight = 50;
+    var maxHeight = opts.height || 640;
+	var margin = opts.margin || {top: 10, left: 10, right: 10, bottom: 20};
 
-	var margin = {top: 10, left: 10, right: 10, bottom: 20};
-	var bandWidth = 50;
-	var bandHeight = maxHeight / options.length;
-
-    var chartDiv = document.querySelector('#poll-chart') || null;
+    var chartDiv = d3.select(elemID) || null;
 
     if (chartDiv === null) {
-		console.error("Poll chart must be id'ed with #poll-chart.");
+		console.error("Poll chart must be id'ed with an ID which exists.");
 		return;
 	}
 
     var maxVotes = Math.max.apply(null, votes);
 
     if (isNaN(maxVotes)) {
-		console.error("Max votes is: " + maxVotes 
+		console.error("Max votes is: " + maxVotes
 			+ " Expected number. Abortin...");
 		return;
 	}
 
     var svg = d3.select("svg");
+    if (svg.empty()) {
+        console.log("svg selection is empty. Creating a new elment.");
+        chartDiv.append("svg");
+        svg = d3.select("svg");
+        svg.attr("style", "height: " + maxHeight + "px");
+    }
+
     var svgWidth = svg.style("width").replace("px", "");
     var svgHeight = svg.style("height").replace("px", "");
 
@@ -38,8 +44,8 @@ function genPollChart(options, votes) {
 
     var i = 0;
     var data = [];
-    for (i = 0; i < options.length; i++) {
-        var dataObj = {v: parseInt(votes[i]), o: options[i]};
+    for (i = 0; i < choices.length; i++) {
+        var dataObj = {v: parseInt(votes[i]), o: choices[i]};
         data.push(dataObj);
     }
 
@@ -49,7 +55,7 @@ function genPollChart(options, votes) {
 
     // Creates scales for mapping data (domain) to pixels (range)
     var yScale = d3.scaleBand().rangeRound([0, maxHeight]).padding(0.2);
-    yScale.domain(options.map(function(d,i) {
+    yScale.domain(choices.map(function(d,i) {
         return i;
     }));
 
@@ -57,7 +63,7 @@ function genPollChart(options, votes) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var outerPadding = yScale.paddingOuter() * yScale.step();
-    var xAxisY = yScale(options.length - 1) + yScale.bandwidth() + outerPadding;
+    var xAxisY = yScale(choices.length - 1) + yScale.bandwidth() + outerPadding;
     console.log("xAxisY max is " + xAxisY + " outer: " + outerPadding);
     //var xAxisY = yScale.range()[1];
 
@@ -73,7 +79,7 @@ function genPollChart(options, votes) {
     // Create Y-axis
     g.append("g")
         .attr("class", "axis y-axis")
-        .text("Options")
+        .text("choices")
         .call(d3.axisLeft(yScale)
     );
 
@@ -98,6 +104,7 @@ function genPollChart(options, votes) {
 		.data(data).enter()
         .append("text")
             .text(function(d) {return d.o + ": " + d.v;})
+            .attr("class", "vote-label")
             .attr("style", "font-size: 20px")
             .attr("x", 20)
             .attr("y", function(d, i) {

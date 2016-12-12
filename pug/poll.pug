@@ -10,6 +10,9 @@ html
 
     title= pollName
 
+    script(src="https://d3js.org/d3.v4.min.js")
+    script(src="/common/gen_chart.js")
+
     link(href="" + bs rel="stylesheet" type="text/css")
     link(href="/public/css/main.css" rel="stylesheet" type="text/css")
 
@@ -59,11 +62,16 @@ html
 
         //- This part shows the poll results as a chart
         div.col-md-5.poll-page-box#poll-chart
-          p Chart of the poll data should be shown here
-          p Show poll results here
-          ul
-            - for (var i = 0; i < options.length; i++) {
-              li= options[i] + ": " + votes[i]
-            -}
+          - if(0) {
+            p Chart of the poll data should be shown here
+            p Show poll results here
+            ul
+              - for (var i = 0; i < options.length; i++) {
+                li= options[i] + ": " + votes[i]
+              -}
+          -}
         div.col-md-1
+
+    script(type="text/javascript" src="/common/ajax-functions.js")
+    script(type="text/javascript" src="/controllers/pollController.client.js")
 
