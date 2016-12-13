@@ -6,14 +6,15 @@ html
   +pageHead()
 
   body
-
     +topMenu("index")
-
     +appTitle()
 
-    div.container.btn-container
-      a.text-center(href="/create")
-        button.btn.btn-success New Poll
+    div.container
+      p
+        a.text-centered(href="/create")
+          button.btn.btn-clem New Poll
+
+    div.container
 
       ul#list-of-polls.list-group
 

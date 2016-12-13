@@ -28,15 +28,17 @@ body {
 	padding: 0;
 }
 
-header {
-	color: $btn-clem-bg;
-	height: 56px;
-	margin: 0 0 14px 0;
-	text-align: center;
-}
-
 p {
 	margin: 8px 0 0 0;
+}
+
+img {
+	margin: 0 auto;
+	display: block;
+}
+
+span {
+	font-weight: 500;
 }
 
 .container p {
@@ -44,10 +46,32 @@ p {
 	padding: 0;
 }
 
+//---------------------------------------------------------------------------
+// HEADER
+//---------------------------------------------------------------------------
+
+header {
+	color: $btn-clem-bg;
+	height: 56px;
+	margin: 0 0 14px 0;
+	text-align: center;
+}
+
+/** Applied to each p appearing after a in header.*/
+header a ~ p {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	color: #ECEFF1;
+}
 
 header p {
 	margin: 16px 0 5px 0;
 }
+
+//---------------------------------------------------------------------------
+// MENU (inside header)
+//---------------------------------------------------------------------------
 
 .menu {
 	text-decoration: none;
@@ -68,60 +92,16 @@ header p {
 	color: #FF630D;
 }
 
-/** Applied to each p appearing after a in header.*/
-header a ~ p {
-	margin: 0;
-	padding: 0;
-	display: inline;
-	color: #ECEFF1;
-}
-
-#display-name {
-	font-weight: 400;
-}
-
-.login {
-	margin: 86px auto 0 auto;
-	text-align: center;
-}
+//---------------------------------------------------------------------------
+// BUTTONS
+//---------------------------------------------------------------------------
 
 #login-btn {
 	width: 225px;
 	padding: 7px 5px;
 }
 
-.btn p {
-	margin: 8px 0 0 0;
-	padding: 0;
-}
-
-.btn > img {
-	float: left;
-	margin-left: 10px
-}
-
-
-img {
-	margin: 0 auto;
-	display: block;
-}
-
-.clementine-text {
-	padding: 0;
-	margin: -25px 0 0 0;
-	font-weight: 500;
-	font-size: 60px;
-	color: $clem-color;
-}
-
-
-.btn-container {
-	margin: -10px auto 0 auto;
-	text-align: center;
-}
-
 .btn {
-	margin: 0 8px;
 	color: white;
 	border: 0;
 	font-size: 14px;
@@ -150,6 +130,10 @@ img {
 	color: #212121;
 }
 
+//---------------------------------------------------------------------------
+// USER PROFILE
+//---------------------------------------------------------------------------
+
 .user-profile {
 	width: 350px;
 	height: 200px;
@@ -177,9 +161,6 @@ img {
 	font-weight: 400;
 }
 
-span {
-	font-weight: 500;
-}
 
 .user-profile .menu:hover {
 	color: $clem-color;
@@ -187,6 +168,27 @@ span {
 
 .user-profile .menu:active {
 	color: #FF630D;
+}
+
+//---------------------------------------------------------------------------
+// MISC
+//---------------------------------------------------------------------------
+
+#display-name {
+	font-weight: 400;
+}
+
+.login {
+	margin: 86px auto 0 auto;
+	text-align: center;
+}
+
+.clementine-text {
+	padding: 0;
+	margin: -25px 0 0 0;
+	font-weight: 500;
+	font-size: 60px;
+	color: $clem-color;
 }
 
 #menu-divide {

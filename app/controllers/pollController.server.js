@@ -239,13 +239,23 @@ module.exports = function(path) {
             var votedOption = req.body.option;
             var options = poll.options.names;
 
-            // Check that no vote came from the IP before
-            var voteIP = req.ip;
+            // Check if this user has voted already in this poll
+            var index = 0;
             var voters = poll.info.voters;
-            var index = voters.indexOf(voteIP);
+
+            if (req.isAuthenticated()) {
+                var username = req.user.username;
+                index = voters.indexOf(username);
+                if (index === -1) poll.info.voters.push(username);
+            }
+            else {
+                // Check that no vote came from the IP before
+                var voteIP = req.ip;
+                index = voters.indexOf(voteIP);
+                if (index === -1) poll.info.voters.push(voteIP);
+            }
 
             if (index >= 0) return res.json({msg: "You have already voted."});
-            else poll.info.voters.push(voteIP);
 
             // Find the voted option position and add a vote
             for (i = 0; i < options.length; i++) {
