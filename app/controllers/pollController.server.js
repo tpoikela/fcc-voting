@@ -189,7 +189,6 @@ module.exports = function(path) {
         }
     };
 
-
     /** Deletes poll with given ID. Request must come from authenticated user
      * who is creator of the poll. */
     this.deletePollById = function(req, res) {

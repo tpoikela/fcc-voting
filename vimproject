@@ -2,7 +2,6 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
  README.md
  package.json
  server.js
- main.css.bak
  git=.git {
   hooks=hooks {
    applypatch-msg.sample
