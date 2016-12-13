@@ -41,6 +41,7 @@ jspm_packages
 
 # SASS/SCSS
 .sass-cache
+*.map
 
 # MISC
 tags
