@@ -1,0 +1,24 @@
+//- File which is rendered for profile requests
+
+include mixins.pug
+
+html
+  +pageHead()
+
+  body
+    +topMenu("profile")
+    +appTitle()
+
+    div.container
+      div.user-profile
+
+        p
+          span Username:
+          span#profile-username.profile-value
+
+        p Polls created:
+        //- Populated from user poll info
+        ul#profile-poll-list
+
+    script(type="text/javascript" src="common/ajax-functions.js")
+    script(type="text/javascript" src="controllers/userController.client.js")

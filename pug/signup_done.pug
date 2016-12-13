@@ -1,0 +1,31 @@
+// Served after signup
+// ARGS: ok: true|false, based on success of signup
+//       name: Registered/attempted username
+
+- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+
+html
+  head
+    meta(http-equiv="content-type" content="text/html; charset=utf-8")
+
+    title Signup
+
+    link(href="" + bs rel="stylesheet" type="text/css")
+    link(href="/public/css/main.css" rel="stylesheet" type="text/css")
+
+  body
+
+    header
+      a.menu(href="/") Home
+      - if (ok)
+        a.menu(href="/login") Login
+      - else
+        a.menu(href="/signup") Signup
+
+    div.container
+      - if (ok) {
+        p Registered user #{name} successfully.
+      - } else {
+        p
+          Username #{name} already taken. Try again.
+      - }

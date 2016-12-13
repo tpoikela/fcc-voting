@@ -38,3 +38,9 @@ jspm_packages
 
 # dotenv files
 .env
+
+# SASS/SCSS
+.sass-cache
+
+# MISC
+tags

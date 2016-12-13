@@ -17,8 +17,14 @@ var reqDebug = function(req) {
 
 module.exports = function (app, passport) {
 
+    /** Renders a pug template.*/
+    var renderPug = function(req, res, pugFile) {
+        var isAuth = req.isAuthenticated();
+        res.render(path + "/pug/" + pugFile, {isAuth: isAuth});
+    };
+
     /** loggedIn func from clementine.js. */
-	function isLoggedIn (req, res, next) {
+	var isLoggedIn = function(req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
@@ -31,19 +37,17 @@ module.exports = function (app, passport) {
 
 	app.route('/')
 		.get(function (req, res) {
-            var isAuth = req.isAuthenticated();
-            res.render(path + "/pug/index.pug", 
-                {isAuth: isAuth});
+            renderPug(req, res, "index.pug");
 		});
 
 	app.route('/signup')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/signup.html');
+            renderPug(req, res, "signup.pug");
 		});
 
 	app.route('/login')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/login.html');
+            renderPug(req, res, "login.pug");
 		});
 
     // If a user logs out, return to main page
@@ -55,12 +59,12 @@ module.exports = function (app, passport) {
 
     app.route('/create')
         .get(isLoggedIn, function(req, res) {
-            res.sendFile(path + '/public/create.html');
+            renderPug(req, res, "create.pug");
         });
 
 	app.route('/profile')
 		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/profile.html');
+            renderPug(req, res, "profile.pug");
 		});
 
     // Handle registration of user

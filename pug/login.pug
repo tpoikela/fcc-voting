@@ -1,0 +1,41 @@
+//- File which is rendered for logging in as a user
+
+include mixins.pug
+
+html
+  +pageHead()
+
+  body
+    +topMenu("signup")
+    +appTitle()
+
+    div.container
+      div.row
+        div.col-md-3
+
+        div.col-md-6.login
+
+          a(href="/auth/github")
+            div#login-btn.btn.btn-clem
+              img(src="/public/img/github_32px.png" alt="github logo")
+              p LOGIN WITH GITHUB
+
+          p OR enter username/password:
+
+          form(method="POST" action="/auth/userlogin")
+
+            div.form-group
+              label(for="userNameInput") Username
+              input#userNameInput.form-control(
+                name="username" type="text" placeholder="Enter username")
+
+            div.form-group
+              label(for="userPasswordInput") Password
+              input#userPasswordField.form-control(
+                name="password" type="password" placeholder="Password")
+
+            button.btn.btn-clem(type="submit") Submit
+
+        div.col-md-3
+
+    +appFooter()

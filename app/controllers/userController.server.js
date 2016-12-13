@@ -31,13 +31,13 @@ module.exports = function() {
                         if (err) return errorHandler(err, res);
                         console.log("Register local user " + username + " with pw " + password);
                         //res.json({msg: "Username " + username + " registered successfully."});
-                        res.render(path + "/pug/signup.pug", 
+                        res.render(path + "/pug/signup_done.pug",
                             {ok: true, name: username});
                     });
 
                 }
                 else {
-                    res.render(path + "/pug/signup.pug", 
+                    res.render(path + "/pug/signup_done.pug",
                         {ok: false, name: username});
                 }
             });

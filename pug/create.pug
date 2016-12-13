@@ -1,0 +1,49 @@
+//- This file is rendered when a user wants to create a new poll
+
+include mixins.pug
+
+html
+  +pageHead()
+
+  body
+    +topMenu("create")
+
+    +appTitle()
+
+    div.container
+      h1 Create a new poll
+
+      div.row
+        div.col-md-6
+          div.create-poll-form
+
+            //- Poll name is entered here by the user
+            span.label.label-default Poll name:
+            input#poll-name-input(
+              type="text" class="form-control"
+              placeholder="Poll name" pattern="^[^<>/]+$"
+              title="No <,/ or > in poll name"
+              required=required)
+
+            //- A poll option must be entered here
+            span.label.label-default Option:
+            input#option-name-input(
+              type="text" class="form-control"
+              placeholder="Option name" pattern="^[^<>/]+$"
+              title="No <,/ or > in option name")
+
+          button#add-option-button.btn.btn-primary Add option
+          button#create-button.btn.btn-success Create poll
+          br
+
+          span#poll-create-message
+
+
+      div.col-md-6
+        h2 Poll options:
+        ul#options-list
+
+    +appFooter()
+
+    script(type="text/javascript" src="/common/ajax-functions.js" charset="utf-8")
+    script(type="text/javascript" src="/controllers/pollCreator.client.js" charset="utf-8")
