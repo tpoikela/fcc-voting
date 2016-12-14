@@ -62,9 +62,10 @@
   <!-- Test 1 for normal poll data. -->
   <script>
     $(document).ready( function () {
-      var options = ["a", "b", "c", "d"];
+      var options = ["a very long poll option is shown here", "shorter option", "c", "d"];
       var votes   = [10, 1, 30, 12];
-      genPollChart('#poll-chart', options, votes);
+      var opts = {$DEBUG: 1};
+      genPollChart('#poll-chart', options, votes, opts);
     });
   </script>
 
