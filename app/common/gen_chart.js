@@ -10,13 +10,15 @@
 function genPollChart(elemID, choices, votes, opts) {
     opts = opts || {};
 
-    var $DEBUG = opts.$DEBUG || 0;
+    var $DEBUG = opts.$DEBUG || 1;
 
     var maxWidth = 400;
     var maxHeight = opts.height || 560;
 	var margin = opts.margin || {top: 10, left: 10, right: 10, bottom: 20};
 
     var chartDiv = d3.select(elemID) || null;
+    var w = chartDiv.style("width").replace("px", "");
+    console.log("chartDiv w is " + w);
 
     if (chartDiv === null) {
 		console.error("Poll chart must be id'ed with an ID which exists.");
@@ -40,7 +42,9 @@ function genPollChart(elemID, choices, votes, opts) {
         svg.attr("style", "height: " + maxHeight + "px");
     }
 
-    var svgWidth = svg.style("width").replace("px", "");
+    //var svgWidth = svg.style("width").replace("px", "");
+    var svgWidth = w * 0.8;
+    //svg.attr("style", "width: " + svgWidth + "px");
     var svgHeight = svg.style("height").replace("px", "");
 
 	maxWidth = svgWidth - margin.left - margin.right;
@@ -107,15 +111,21 @@ function genPollChart(elemID, choices, votes, opts) {
 
     // Create labels with a number of votes in them. Each label has name and
     // number of votes for that label
-	g.selectAll(".voteBar")
+	//g.selectAll(".voteBar")
+    var styleFontSize = "font-size:" + labelFontSize + "px;";
+	chartDiv.selectAll(".vote-option-label")
 		.data(data).enter()
-        .append("text")
+        .append("label")
             .text(function(d) {return d.o + ": " + d.v;})
-            .attr("class", "vote-label")
-            .attr("style", "font-size: " + labelFontSize + "px")
-            .attr("x", 20)
-            .attr("y", function(d, i) {
-                return yScale(i) + yScale.bandwidth() * 0.50 + labelFontSize/3;
+            .attr("class", "vote-option-label")
+            //.attr("style", "font-size: " + labelFontSize + "px")
+            .attr("style", function(d, i) {
+                var pixTop = yScale(i) + yScale.bandwidth() * 0.30;
+                var style = "top: " + pixTop + "px;";
+                var pixLeft = margin.left + 5 + 15;
+                style += "left: " + pixLeft + "px;";
+                style += styleFontSize;
+                return style;
             });
 
 };
