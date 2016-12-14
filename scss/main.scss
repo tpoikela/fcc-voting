@@ -28,10 +28,6 @@ body {
 	padding: 0;
 }
 
-p {
-	margin: 8px 0 0 0;
-}
-
 img {
 	margin: 0 auto;
 	display: block;
@@ -197,13 +193,6 @@ header p {
 	margin: 0;
 }
 
-.poll-page-box {
-    //border: 1px solid black;
-    //border-radius: 20px;
-	//background-color: $clem-color;
-    //padding: 10px;
-}
-
 .create-poll-form {
     margin-bottom: 15px;
 }
@@ -220,3 +209,17 @@ a.author {
     fill: $clem-color;
 }
 
+.vote-option-label {
+    position: absolute;
+    word-wrap: break-word;
+}
+
+.poll-radiobutton-label {
+    word-wrap: break-word;
+    margin-left: 10px;
+}
+
+svg {
+    width: 100%;
+    display: block;
+}
