@@ -37,8 +37,8 @@ html
             form(method="POST" action="/polls/vote/" + pollID)
               - for (var i = 0; i < options.length; i++) {
                 div.form-group
-                  label= options[i]
-                  input(type="radio" name="option" value="" + options[i])
+                  input.poll-radiobutton(type="radio" name="option" value="" + options[i])
+                  label.poll-radiobutton-label= options[i]
               -}
               button.btn.btn-clem(type="submit") Vote!
 
