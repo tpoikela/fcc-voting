@@ -1,21 +1,18 @@
 // This file is served if an ID with no matching poll is requested
 
-- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+include mixins.pug
 
+doctype html
 html
-  head
-    meta(http-equiv="content-type" content="text/html; charset=utf-8")
-
-    title Poll not found
-
-    link(href="" + bs rel="stylesheet" type="text/css")
-    link(href="/public/css/main.css" rel="stylesheet" type="text/css")
+  +pageHead()
 
   body
 
-    header
-      a.menu(href="/") Home
+    +topMenu("invalid_poll")
+    +appTitle()
 
     div.container
       p Cannot find poll with an ID #{pollID}
+
+    +appFooter()
 
