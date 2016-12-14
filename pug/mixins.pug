@@ -1,7 +1,16 @@
 //- This file contains mixins used in all .pug files. This helps making layouts
-//- more unified across all different pages.
+//- more unified across all different pages, and helps in following DRY.
 
 - var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+
+- var domain = "http://www.your-domain.com/your-page.html"
+
+mixin metaProps()
+  meta(property="og:url" content="" + domain)
+  meta(property="og:type" content="website")
+  meta(property="og:title" content="FCC Voting App")
+  meta(property="og:description" content="You can create polls, and vote in other polls!")
+  //- meta(property="og:image" content="http://www.your-domain.com/path/image.jpg" )
 
 mixin styleSheets()
     link(href="" + bs rel="stylesheet" type="text/css")
@@ -10,9 +19,11 @@ mixin styleSheets()
 mixin pageHead()
   head
     meta(http-equiv="content-type" content="text/html; charset=utf-8")
+    +metaProps()
     title FCC Voting App
     +styleSheets()
 
+//- Main navigation bar at the top of the page.
 mixin topMenu(title)
   header
     p
@@ -38,3 +49,10 @@ mixin appFooter()
   footer.container
     p
       a.author(href="www.freecodecamp.com/tpoikela") tpoikela
+
+mixin fbShareButton
+  div.fb-share-button(
+    data-href="" + domain
+    data-layout="button_count")
+
+
