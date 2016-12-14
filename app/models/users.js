@@ -38,7 +38,9 @@ var User = new Schema({
     // Each poll is referenced by its object ID
     polls: [{type: ObjectId, ref: 'Poll' }],
 
-});
+},
+{collection: "vote_users"}
+);
 
 module.exports = mongoose.model('User', User);
 

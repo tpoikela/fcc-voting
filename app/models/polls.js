@@ -49,7 +49,9 @@ var Poll = new Schema({
         },
 
     },
-});
+},
+{collection: "vote_polls"}
+);
 
 module.exports = mongoose.model('Poll', Poll);
 
