@@ -16,9 +16,6 @@ body {
   margin: 0;
   padding: 0; }
 
-p {
-  margin: 8px 0 0 0; }
-
 img {
   margin: 0 auto;
   display: block; }
@@ -147,5 +144,17 @@ a.author {
 
 .vote-label {
   fill: #FFA000; }
+
+.vote-option-label {
+  position: absolute;
+  word-wrap: break-word; }
+
+.poll-radiobutton-label {
+  word-wrap: break-word;
+  margin-left: 10px; }
+
+svg {
+  width: 100%;
+  display: block; }
 
 /*# sourceMappingURL=main.css.map */
