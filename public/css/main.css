@@ -117,8 +117,11 @@ header p {
   font-weight: 400; }
 
 .login {
-  margin: 86px auto 0 auto;
+  margin: 10px auto 0 auto;
   text-align: center; }
+
+#pw-login-msg {
+  margin-top: 5px; }
 
 .clementine-text {
   padding: 0;
@@ -146,7 +149,8 @@ a.author {
 
 .vote-option-label {
   position: absolute;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  color: #FFA000; }
 
 .poll-radiobutton-label {
   word-wrap: break-word;
