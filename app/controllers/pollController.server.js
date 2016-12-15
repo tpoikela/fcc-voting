@@ -53,7 +53,6 @@ module.exports = function(path) {
 
                 User.update({_id: userResult._id}, setOpt, {}, function(err) {
                     if (err) return cb(err);
-                    //res.json({msg: "New poll has been created."});
                     cb(null); // No error, everything OK
                 });
             }
@@ -134,9 +133,19 @@ module.exports = function(path) {
 
 	};
 
+    var getPollPugVars = function(req, poll) {
+        return {
+            pollName: poll.name,
+            pollID: poll._id,
+            options: poll.options.names,
+            votes: poll.options.votes,
+            isAuth: req.isAuthenticated(),
+            isCreator: isPollCreator(req, poll),
+        };
+    };
+
     // Serves requested poll as a HTML page
     this.getPollById = function(req, res) {
-        var isAuth = req.isAuthenticated();
         if (req.params.id) {
             var pollID = req.params.id;
             Poll.findOne({_id: pollID}, function(err, result) {
@@ -144,16 +153,7 @@ module.exports = function(path) {
 
                 if (result) {
                     if ($DEBUG) console.log("getPollByID: " + JSON.stringify(result));
-
-                    var pugVars = {
-                        pollName: result.name,
-                        pollID, pollID,
-                        options: result.options.names,
-                        votes: result.options.votes,
-                        isAuth: isAuth,
-                        isCreator: isPollCreator(req, result),
-                    };
-
+                    var pugVars = getPollPugVars(req, result);
                     res.render(path + "/pug/poll.pug", pugVars);
                 }
                 else {
@@ -214,6 +214,7 @@ module.exports = function(path) {
                     });
                 }
                 else {
+                    console.error("An error. Delete from a non-creator.");
                     res.sendStatus(404);
                 }
             });
@@ -224,19 +225,16 @@ module.exports = function(path) {
     };
 
     /** Adds one vote to the poll. TODO prevent double-voting by the same user.*/
-    this.voteOnPoll = function(req, res) {
+    this.addVoteOnPoll = function(req, res) {
         var i = 0;
         var pollID = req.params.id;
         Poll.findOne({_id: pollID}, function(err, poll) {
             if (err) return handleError(err, res);
 
             if ($DEBUG) {
-                console.log("voteOnPoll req.body: " + JSON.stringify(req.body));
+                console.log("addVoteOnPoll req.body: " + JSON.stringify(req.body));
                 console.log("Vote came from IP: " + req.ip);
             }
-
-            var votedOption = req.body.option;
-            var options = poll.options.names;
 
             // Check if this user has voted already in this poll
             var index = 0;
@@ -254,14 +252,20 @@ module.exports = function(path) {
                 if (index === -1) poll.info.voters.push(voteIP);
             }
 
-            if (index >= 0) return res.json({msg: "You have already voted."});
+            if (index >= 0) {
+                var pugVars = getPollPugVars(req, poll);
+                pugVars.alreadyVoted = true;
+                return res.render(path + "/pug/poll.pug", pugVars);
+            }
 
             // Find the voted option position and add a vote
+            var options = poll.options.names;
+            var votedOption = req.body.option;
             for (i = 0; i < options.length; i++) {
                 if (votedOption === options[i]) {
                     poll.options.votes[i] += 1;
                     if ($DEBUG) {
-                        console.log("voteOnPoll voted option: " + votedOption);
+                        console.log("addVoteOnPoll voted option: " + votedOption);
                     }
                 }
             }
