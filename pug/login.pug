@@ -1,5 +1,7 @@
 //- File which is rendered for logging in as a user
 
+- var failed = typeof loginFailed !== "undefined";
+
 include mixins.pug
 
 doctype html
@@ -21,7 +23,11 @@ html
               img(src="/public/img/github_32px.png" alt="github logo")
               p LOGIN WITH GITHUB
 
-          p OR enter username/password:
+          - if (!failed) {
+            p#pw-login-msg OR enter username/password:
+          - } else {
+            p#pw-login-msg.text-danger Login failed. Please retry.
+          - }
 
           form(method="POST" action="/auth/userlogin")
 
