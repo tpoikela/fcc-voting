@@ -2,6 +2,8 @@
 //- 1. If a user is authenticated, adds "Add Option" button
 //- 2. If a user is the poll creator, add a Delete Button as well
 
+- var votedAlready = typeof alreadyVoted !== "undefined";
+
 include mixins.pug
 
 doctype html
@@ -43,24 +45,20 @@ html
               -}
               button.btn.btn-clem(type="submit") Vote!
 
+            - if (votedAlready)
+              p.text-danger You have already voted on this poll.
 
+          //- Form for adding a voting option to the poll (for reg users)
           - if (isAuth)
             p As a registered user, feel free to create a new voting option:
             form(method="POST" action="/polls/update/" + pollID)
               input.form-control#optionField(
-              name="option" type="text" placeholder="Option" pattern="^[^<>/]+$")
+                name="option" type="text" placeholder="Option" pattern="^[^<>/]+$")
               button.btn.btn-clem(type="submit") Add Option
 
         //- This part shows the poll results as a chart
         div.col-md-5.poll-page-box#poll-chart
-          - if(0) {
-            p Chart of the poll data should be shown here
-            p Show poll results here
-            ul
-              - for (var i = 0; i < options.length; i++) {
-                li= options[i] + ": " + votes[i]
-              -}
-          -}
+
         div.col-md-1
 
     +appFooter()
