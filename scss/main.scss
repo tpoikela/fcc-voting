@@ -174,8 +174,12 @@ header p {
 }
 
 .login {
-	margin: 86px auto 0 auto;
+	margin: 10px auto 0 auto;
 	text-align: center;
+}
+
+#pw-login-msg {
+    margin-top: 5px;
 }
 
 .clementine-text {
@@ -211,6 +215,7 @@ a.author {
 .vote-option-label {
     position: absolute;
     word-wrap: break-word;
+    color: $clem-color;
 }
 
 .poll-radiobutton-label {
