@@ -4,15 +4,19 @@ var path = process.cwd();
 const UserController = require(path + '/app/controllers/userController.server.js');
 const PollController = require(path + '/app/controllers/pollController.server.js');
 
+var _log = function(msg) {
+    console.log("\t" + msg);
+};
+
 /** Function for debug logging request.*/
 var reqDebug = function(req) {
-	console.log("Headers: " + JSON.stringify(req.headers));
-	console.log("Body: "    + JSON.stringify(req.body));
-	console.log("Params: "  + JSON.stringify(req.params));
-	console.log("Url:"      + JSON.stringify(req.url));
-	console.log("Text:"     + JSON.stringify(req.text));
-	console.log("Content:"  + JSON.stringify(req.content));
-	console.log("Query:"    + JSON.stringify(req.query));
+	_log("Headers: " + JSON.stringify(req.headers));
+	_log("Body: "    + JSON.stringify(req.body));
+	_log("Params: "  + JSON.stringify(req.params));
+	_log("Url:"      + JSON.stringify(req.url));
+	_log("Text:"     + JSON.stringify(req.text));
+	_log("Content:"  + JSON.stringify(req.content));
+	_log("Query:"    + JSON.stringify(req.query));
 };
 
 module.exports = function (app, passport) {
@@ -49,6 +53,12 @@ module.exports = function (app, passport) {
 		.get(function (req, res) {
             renderPug(req, res, "login.pug");
 		});
+
+	app.route('/loginFailed')
+		.get(function (req, res) {
+            res.render(path + "/pug/login.pug", 
+                {isAuth: false, loginFailed: true});
+        });
 
     // If a user logs out, return to main page
 	app.route('/logout')
@@ -92,7 +102,7 @@ module.exports = function (app, passport) {
 
     app.route('/polls/vote/:id')
         .post(function(req, res) {
-            pollController.voteOnPoll(req, res);
+            pollController.addVoteOnPoll(req, res);
         });
 
     app.route('/polls/update/:id')
@@ -126,7 +136,8 @@ module.exports = function (app, passport) {
 
     // Logs user in via form (after successful authentication
 	app.route('/auth/userlogin')
-        .post(passport.authenticate('local', { failureRedirect: '/login' }),
+        .post(passport.authenticate('local', 
+            { failureRedirect: '/loginFailed' }),
 		function(req, res) {
 			res.redirect('/');
 		});
@@ -137,7 +148,7 @@ module.exports = function (app, passport) {
 	app.route('/auth/github/callback')
 		.get(passport.authenticate('github', {
 			successRedirect: '/',
-			failureRedirect: '/login'
+			failureRedirect: '/loginFailed'
 		}));
 
 };
