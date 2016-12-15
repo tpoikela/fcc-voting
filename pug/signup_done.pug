@@ -2,7 +2,7 @@
 // ARGS: ok: true|false, based on success of signup
 //       name: Registered/attempted username
 
-- var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
+include mixins.pug
 
 doctype html
 html
@@ -10,12 +10,8 @@ html
 
   body
 
-    header
-      a.menu(href="/") Home
-      - if (ok)
-        a.menu(href="/login") Login
-      - else
-        a.menu(href="/signup") Signup
+    +topMenu("signup_done")
+    +appTitle()
 
     div.container
       - if (ok) {
@@ -24,3 +20,6 @@ html
         p
           Username #{name} already taken. Try again.
       - }
+
+
+    +appFooter()
