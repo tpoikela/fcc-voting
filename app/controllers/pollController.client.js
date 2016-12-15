@@ -3,11 +3,13 @@
 
 (function () {
 
+    var $DEBUG = 0;
+
     var appUrl = window.location.origin;
     var thisUrl = window.location;
     var pollID = /[a-zA-Z0-9]+$/.exec(thisUrl);
 
-    console.log("URL: " + thisUrl + " Poll ID is " + pollID);
+    if ($DEBUG) console.log("URL: " + thisUrl + " Poll ID is " + pollID);
 
     var pollList = document.querySelector("#list-of-polls") || null;
     var apiUrl = appUrl + '/polls';
@@ -36,15 +38,21 @@
                 }
                 pollList.innerHTML = html;
             }
+            else {
+                pollList.innerHTML = "<p " + style + " >" +
+                    "There are no polls yet. Signup, login and create one.</p>";
+            }
         }
     }));
 
+    // Called only on the actual poll page. Retrieves votes and poll choices,
+    // and generates a chart for the poll showing results.
     if (pollChart !== null)
     ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', getPollAPI, function (err, data) {
         if (err) throw new Error(err);
         else {
             var poll = JSON.parse(data);
-            console.log("Poll data is " + data);
+            if ($DEBUG) console.log("Poll data is " + data);
             var choices = poll.options.names;
             var votes = poll.options.votes;
             genPollChart("#poll-chart", choices, votes);
