@@ -6,6 +6,8 @@ var configAuth = require('./auth');
 
 var LocalStrategy = require("passport-local").Strategy;
 
+const hash = require("../common/hash_password");
+
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
 		done(null, user.id);
@@ -68,7 +70,7 @@ module.exports = function (passport) {
 	// Strategy for local password verification
     passport.use(new LocalStrategy({
 
-		// These are defaults, so no need to specify them
+		// These are defaults, so no need to specify them here
 		//userNameField: "username",
 		//passwordField: "password",
 		//passReqToCallback: true,
@@ -79,7 +81,10 @@ module.exports = function (passport) {
 			User.findOne({"local.username": username}, function(err, user) {
 			  if (err) { return done(err); }
 			  if (!user) { return done(null, false); }
-			  if (user.local.password !== password) { return done(null, false); }
+
+              var hashed = hash.getHash(password);
+
+			  if (user.local.password !== hashed) { return done(null, false); }
 			  return done(null, user);
 			});
 		}
