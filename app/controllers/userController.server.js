@@ -4,6 +4,8 @@ var path = process.cwd();
 // Used for MongoDB access
 var User = require('../models/users.js');
 
+const hash = require("../common/hash_password");
+
 module.exports = function() {
 
     var errorHandler = function(err, res) {
@@ -25,7 +27,8 @@ module.exports = function() {
 					var newUser = new User();
                     newUser.username = username;
                     newUser.local.username = username;
-                    newUser.local.password = password;
+
+                    newUser.local.password = hash.getHash(password);
 
                     newUser.save(function(err) {
                         if (err) return errorHandler(err, res);
@@ -68,17 +71,6 @@ module.exports = function() {
         if (req.isAuthenticated()) {
             console.log("getUser Req auth, user " + JSON.stringify(req.user));
             var username = req.user.username;
-
-            /*
-            if (req.user.github.username) {
-                username = req.user.github.username;
-            }
-            else if (req.user.local.username) {
-                username = req.user.local.username;
-            }
-            else {
-                res.sendStatus(400); // Something went wrong terribly
-            }*/
 
             //TODO send a full user object
             //res.json({username: username});
