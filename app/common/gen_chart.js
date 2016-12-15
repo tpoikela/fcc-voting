@@ -111,14 +111,13 @@ function genPollChart(elemID, choices, votes, opts) {
 
     // Create labels with a number of votes in them. Each label has name and
     // number of votes for that label
-	//g.selectAll(".voteBar")
+
     var styleFontSize = "font-size:" + labelFontSize + "px;";
 	chartDiv.selectAll(".vote-option-label")
 		.data(data).enter()
         .append("label")
             .text(function(d) {return d.o + ": " + d.v;})
             .attr("class", "vote-option-label")
-            //.attr("style", "font-size: " + labelFontSize + "px")
             .attr("style", function(d, i) {
                 var pixTop = yScale(i) + yScale.bandwidth() * 0.30;
                 var style = "top: " + pixTop + "px;";
