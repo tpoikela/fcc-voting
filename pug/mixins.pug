@@ -38,6 +38,16 @@ mixin topMenu(title)
       a.menu(href="/signup") Signup
     - }
 
+mixin createButton(isAuth)
+  div.container
+    - if (isAuth) {
+      p
+        a.text-centered(href="/create")
+          button.btn.btn-clem New Poll
+    - } else {
+      p Login to create a new poll or vote in the polls below:
+    - }
+
 mixin appTitle()
   div.container
     p.clementine-text FCC Voting App
