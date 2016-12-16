@@ -6,7 +6,7 @@ const User = require("../models/users.js");
 
 module.exports = function(path) {
 
-    var $DEBUG = 1;
+    var $DEBUG = 0;
 
     var handleError = function(err, res) {
         return res.sendStatus(500);
@@ -111,7 +111,7 @@ module.exports = function(path) {
                 return handleError(err, res);
             }
 
-            console.log("addPoll ID is " + poll._id);
+            if ($DEBUG) console.log("addPoll ID is " + poll._id);
 
             // Correct thing would be to remove poll on error because otherwise
             // Poll and User data are inconsistent
@@ -133,6 +133,8 @@ module.exports = function(path) {
 
 	};
 
+    /** Given req and poll object, returns object for filling the pug
+     * template. */
     var getPollPugVars = function(req, poll) {
         return {
             pollName: poll.name,
