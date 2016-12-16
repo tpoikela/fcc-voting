@@ -124,6 +124,7 @@ function genPollChart(elemID, choices, votes, opts) {
                 var pixLeft = margin.left + 5 + 15;
                 style += "left: " + pixLeft + "px;";
                 style += styleFontSize;
+                style += "max-height: " + 2*labelFontSize + "px;";
                 return style;
             });
 
