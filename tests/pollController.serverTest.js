@@ -162,6 +162,7 @@ describe('How pollController on server side works', function() {
         req.params = {id: expId};
 
         pollFindOne.yields(null, pollObj);
+        pollUpdate.yields(null);
 
         Promise.all([ctrl.addVoteOnPoll(req, res)]).then(function() {
             sinon.assert.calledOnce(res.redirect);
@@ -169,6 +170,13 @@ describe('How pollController on server side works', function() {
             done();
         });
 
+    });
+
+    //---------------------------------------------------------------------------
+    // ERROR tests
+    //---------------------------------------------------------------------------
+
+    it('should reject a voter already voted', function() {
     });
 
 });
