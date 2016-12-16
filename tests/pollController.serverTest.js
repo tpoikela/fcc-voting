@@ -2,7 +2,7 @@
 const expect = require("chai").expect;
 const sinon  = require("sinon");
 
-const mocks = require("node-mocks-http");
+var Fact = require("./factory");
 
 var User = require("../app/models/users");
 var Poll = require("../app/models/polls");
@@ -16,9 +16,6 @@ var createPoll = function() {
     };
 };
 
-var createUser = function() {
-    return {_id: 1234, username: "TestUser", polls: []};
-};
 
 describe('How pollController on server side works', function() {
 
@@ -32,14 +29,8 @@ describe('How pollController on server side works', function() {
 
     beforeEach(function() {
         // Mock req/res for all unit tests
-        req = mocks.createRequest();
-        res = mocks.createResponse();
-
-        sinon.stub(res, "json");
-        sinon.stub(res, "render");
-        sinon.stub(res, "redirect");
-
-        req.isAuthenticated = function() {return true;};
+        req = Fact.getMockedReq();
+        res = Fact.getMockedRes();
 
         ctrl = new PollController(process.cwd());
 
@@ -49,9 +40,7 @@ describe('How pollController on server side works', function() {
     });
 
     afterEach(function() {
-        res.json.restore();
-        res.render.restore();
-        res.redirect.restore();
+        Fact.restoreRes(res);
         pollFindOne.restore();
         pollUpdate.restore();
         pollRemove.restore();
@@ -83,14 +72,13 @@ describe('How pollController on server side works', function() {
 
     it('Adds one poll into the database', function(done) {
         var expMsg = {msg: "New poll has been created."};
-        var user = createUser();
+        var user = Fact.createUser();
         var userFindOne = sinon.stub(User, "findOne");
         userFindOne.yields(null, user);
 
         var userUpdate = sinon.stub(User, "update");
         userUpdate.yields(null);
 
-        var pollSaveMock = sinon.mock(Poll);
         Poll.prototype.save = function(cb) {cb(null);};
 
         req.body.name = "TestPoll";
@@ -138,7 +126,7 @@ describe('How pollController on server side works', function() {
     it('should delete poll by ID number', function(done) {
         var pollObj = createPoll();
         req.params = {id: pollObj._id};
-        req.user = createUser();
+        req.user = Fact.createUser();
         req.user.username = pollObj.info.creator;
 
         pollFindOne.yields(null, pollObj);
@@ -158,7 +146,7 @@ describe('How pollController on server side works', function() {
         var pollObj = createPoll();
         pollObj._id = 12345567457357635;
         var expId = pollObj._id;
-        req.user = createUser();
+        req.user = Fact.createUser();
         req.params = {id: expId};
 
         pollFindOne.yields(null, pollObj);
