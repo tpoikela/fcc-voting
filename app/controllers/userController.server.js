@@ -1,15 +1,13 @@
 
-var path = process.cwd();
-
 // Used for MongoDB access
 var User = require('../models/users.js');
 
 const hash = require("../common/hash_password");
 
-module.exports = function() {
+module.exports = function(path) {
 
     var errorHandler = function(err, res) {
-        console.error("Server error: " + err);
+        console.error("userController Server error: " + err);
         res.sendStatus(500);
     };
 
@@ -33,7 +31,6 @@ module.exports = function() {
                     newUser.save(function(err) {
                         if (err) return errorHandler(err, res);
                         console.log("Register local user " + username + " with pw " + password);
-                        //res.json({msg: "Username " + username + " registered successfully."});
                         res.render(path + "/pug/signup_done.pug",
                             {ok: true, name: username});
                     });
