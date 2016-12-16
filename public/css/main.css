@@ -150,7 +150,9 @@ a.author {
 .vote-option-label {
   position: absolute;
   word-wrap: break-word;
-  color: #FFA000; }
+  color: #FFA000;
+  display: inline-block;
+  overflow: scroll; }
 
 .poll-radiobutton-label {
   word-wrap: break-word;
