@@ -116,6 +116,7 @@ fcc-voting=~/git/fcc-voting CD=~/git/fcc-voting filter="*.*" {
  tests=tests {
   ajax-functions.js
   ajax.html
+  pollController.serverTest.js
   pollsTest.js
   usersTest.js
   validationTest.js
