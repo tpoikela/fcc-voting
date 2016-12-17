@@ -10,8 +10,12 @@ var bodyParser = require('body-parser');
 var app = express();
 app.set("view engine", "pug");
 
+
 require('dotenv').load();
 require('./app/config/passport')(passport);
+
+app.url = process.env.APP_URL;
+console.log("APP url: " + app.url);
 
 mongoose.connect(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
@@ -26,6 +30,8 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true
 }));
+
+app.locals.pretty = true;
 
 app.use(passport.initialize());
 app.use(passport.session());
