@@ -37,7 +37,7 @@ module.exports = function (app, passport) {
 	}
 
     var userController = new UserController(path);
-	var pollController = new PollController(path);
+	var pollController = new PollController(path, app.url);
 
 	app.route('/')
 		.get(function (req, res) {
@@ -125,6 +125,10 @@ module.exports = function (app, passport) {
             pollController.getPollById(req, res);
         });
 
+    app.route('/p/:id')
+        .get(function(req, res) {
+            pollController.getPollByName(req, res);
+        });
     //--------------------------------------
     // User registration and authentication
     //--------------------------------------
