@@ -32,6 +32,8 @@ html
           h1= pollName
 
           - if (isCreator)
+            p To share the poll, you can use the following link: 
+              a(href=pollURI)= pollURI
             form(method="GET" action="/polls/delete/" + pollID)
               button.btn.btn-delete.btn-danger(type="submit") Delete Poll
 
