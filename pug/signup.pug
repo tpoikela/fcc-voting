@@ -11,24 +11,33 @@ html
     +appTitle()
 
     div.container
-      h2 Signup
+      div.row
+      div.col-md-3
 
-      form(method="POST" action="/forms/signup")
+      div.col-md-6
+        p After registration, you can create your own polls.
 
-        div.form-group
-          label(for="usernameField") Username
-          input#usernameField.form-control(
-            name="username" type="text"
-            placeholder="Username" pattern="^[^<>/]+$"
-            title="No <,/ or > in username")
+        h2 Signup
 
-        div.form-group
-          label(for="passwordField") Password
-          input#passwordField.form-control(
-            name="password" type="password"
-            placeholder="Password" required="required"
-            title="Cannot be empty")
+        form(method="POST" action="/forms/signup")
 
-        button.btn.btn-clem(type="submit") Signup!
+          div.form-group
+            label(for="usernameField") Username
+            input#usernameField.form-control(
+              name="username" type="text"
+              placeholder="Username" pattern="^[^<>/]+$"
+              title="No <,/ or > in username")
+
+          div.form-group
+            label(for="passwordField") Password
+            input#passwordField.form-control(
+              name="password" type="password"
+              placeholder="Password" required="required"
+              title="Cannot be empty")
+
+          button.btn.btn-clem(type="submit") Signup!
+
+      div.col-md-3
+
 
     +appFooter()
