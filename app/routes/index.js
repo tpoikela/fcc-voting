@@ -36,7 +36,7 @@ module.exports = function (app, passport) {
 		}
 	}
 
-    var userController = new UserController();
+    var userController = new UserController(path);
 	var pollController = new PollController(path);
 
 	app.route('/')
@@ -109,7 +109,8 @@ module.exports = function (app, passport) {
         .post(function(req, res) {
             pollController.updatePollById(req, res);
         });
-app.route('/polls/delete/:id')
+
+    app.route('/polls/delete/:id')
         .get(function(req, res) {
             pollController.deletePollById(req, res);
         });
