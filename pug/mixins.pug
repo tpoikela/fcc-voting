@@ -2,8 +2,7 @@
 //- more unified across all different pages, and helps in following DRY.
 
 - var bs = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css";
-
-- var domain = "http://www.your-domain.com/your-page.html"
+- var domain = "http://127.0.0.1";
 
 mixin metaProps()
   meta(property="og:url" content="" + domain)
@@ -60,7 +59,7 @@ mixin appFooter()
     p
       a.author(href="http://www.freecodecamp.com/tpoikela") tpoikela
 
-mixin fbShareButton
+mixin fbShareButton()
   div.fb-share-button(
     data-href="" + domain
     data-layout="button_count")
