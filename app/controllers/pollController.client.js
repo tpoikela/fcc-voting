@@ -3,19 +3,32 @@
 
 (function () {
 
-    var $DEBUG = 0;
+    var getPollIdOrName = function(url) {
+        console.log("URL is " + url + " type " + typeof url);
+         var arr = url.split('/');
+         var last = arr[arr.length - 1];
+         if (/[a-zA-Z0-9]/.test(last)) {
+             return last;
+         }
+         return last;
+    };
+
+
+    var $DEBUG = 1;
 
     var appUrl = window.location.origin;
     var thisUrl = window.location;
-    var pollID = /[a-zA-Z0-9]+$/.exec(thisUrl);
+    //var pollID = /[a-zA-Z0-9]+$/.exec(thisUrl);
+    var pollID = getPollIdOrName(thisUrl.toString());
 
-    if ($DEBUG) console.log("URL: " + thisUrl + " Poll ID is " + pollID);
+    if ($DEBUG) console.log("URL: |" + thisUrl + "| Poll ID is |" + pollID + "|");
 
     var pollList = document.querySelector("#list-of-polls") || null;
     var apiUrl = appUrl + '/polls';
     var style = "class='list-group-item'";
 
     var pollChart = document.querySelector("#poll-chart") || null;
+
     var getPollAPI = appUrl + '/polls/getpolls/' + pollID;
 
     var formatLinkHTML = function(url, id, name) {
