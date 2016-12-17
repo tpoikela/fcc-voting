@@ -12,7 +12,10 @@ html
     +appTitle()
 
     div.container
-      p Cannot find poll with an ID #{pollID}
+      - if (pollID)
+        p Cannot find poll with an ID #{pollID}
+      - else if (pollName)
+        p Cannot find poll with name #{pollName}
 
     +appFooter()
 
