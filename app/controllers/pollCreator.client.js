@@ -47,7 +47,12 @@
                 if (data) {
                     var json = JSON.parse(data);
                     clearUserEnteredData();
-                    pollCreateMsg.innerHTML = json.msg;
+                    console.log("URI is " + json.uri);
+                    var html = '<p>' + json.msg + '<br/>' +
+                        "You can share the poll using the link:<br/>" +
+                        "<a href='" + json.uri + "'>"+ json.uri + "</a></p>";
+
+                    pollCreateMsg.innerHTML = html;
                 }
             }
         };
