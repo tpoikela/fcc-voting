@@ -4,11 +4,23 @@ const url = require('url');
 const Poll = require("../models/polls.js");
 const User = require("../models/users.js");
 
-module.exports = function(path) {
+module.exports = function(path, app_url) {
+
+    if (!path) throw new Error("app path not given!");
+    if (!app_url) throw new Error("app_url not given!");
 
     var $DEBUG = 0;
 
-    var handleError = function(err, res) {
+    var getPollURI = function(name) {
+        var pollURI = encodeURIComponent(name);
+        return app_url + "/p/" + pollURI;
+    };
+
+    var handleError = function(err, req, res) {
+        console.error("SERVER ERROR: Headers :" + JSON.stringify(req.headers));
+        console.error("\t From IP: " + req.ip);
+        //console.error("\t From IP: " + req.ip);
+        console.error(err);
         return res.sendStatus(500);
     };
 
@@ -63,7 +75,7 @@ module.exports = function(path) {
     /** Finds all polls from the database and returns their names and IDs.*/
     this.getPolls = function(req, res) {
         Poll.find({}, {name: 1, _id: 1}, function(err, result) {
-            if (err) return handleError(err, res);
+            if (err) return handleError(err, req, res);
             if ($DEBUG) console.log("getPolls: " + JSON.stringify(result));
             res.json(result);
         });
@@ -74,7 +86,7 @@ module.exports = function(path) {
         if (req.params.id) {
             var pollID = req.params.id;
             Poll.findOne({_id: pollID}, function(err, result) {
-                if (err) return handleError(err, res);
+                if (err) return handleError(err, req, res);
                 res.json(result);
             });
         }
@@ -108,7 +120,7 @@ module.exports = function(path) {
                 if ($DEBUG) {
                     console.log("addPoll save had errors");
                 }
-                return handleError(err, res);
+                return handleError(err, req, res);
             }
 
             if ($DEBUG) console.log("addPoll ID is " + poll._id);
@@ -116,7 +128,7 @@ module.exports = function(path) {
             // Correct thing would be to remove poll on error because otherwise
             // Poll and User data are inconsistent
             User.findOne({_id: user._id}, function(err, result) {
-                if (err) return handleError(err, res);
+                if (err) return handleError(err, req, res);
 
                 result.polls.push(poll._id);
                 var setOpt = {$set: {
@@ -124,8 +136,13 @@ module.exports = function(path) {
                 }};
 
                 User.update({_id:result._id}, setOpt, {}, function(err) {
-                    if (err) return handleError(err, res);
-                    res.json({msg: "New poll has been created."});
+                    if (err) return handleError(err, req, res);
+                    var pollURI = encodeURIComponent(poll.name);
+                    var msg = {
+                        msg: "New poll has been created.",
+                        uri: getPollURI(poll.name),
+                    };
+                    res.json(msg);
                 });
 
             });
@@ -143,15 +160,16 @@ module.exports = function(path) {
             votes: poll.options.votes,
             isAuth: req.isAuthenticated(),
             isCreator: isPollCreator(req, poll),
+            pollURI: getPollURI(poll.name),
         };
     };
 
-    // Serves requested poll as a HTML page
+    // Given poll ID in request, serves requested poll as a HTML page
     this.getPollById = function(req, res) {
         if (req.params.id) {
             var pollID = req.params.id;
             Poll.findOne({_id: pollID}, function(err, result) {
-                if (err) return handleError(err, res);
+                if (err) return handleError(err, req, res);
 
                 if (result) {
                     if ($DEBUG) console.log("getPollByID: " + JSON.stringify(result));
@@ -168,19 +186,42 @@ module.exports = function(path) {
         }
     };
 
+    /** Returns a page rendered for the given poll.*/
+    this.getPollByName = function(req, res) {
+        if (req.params.id) {
+            var pollName = decodeURIComponent(req.params.id);
+            console.log("getPollByName: pollName " + pollName);
+            // Decode the pollName from URL
+            Poll.findOne({name: pollName}, function(err, result) {
+                if (err) return handleError(err, req, res);
+
+                if (result) {
+                    var pollID = result._id;
+                    res.redirect("/polls/" + pollID);
+                }
+                else {
+                    res.render(path + "/pug/invalid_poll.pug", {pollName: pollName});
+                }
+            });
+        }
+        else {
+            res.sendStatus(400);
+        }
+    };
+
     /** Updates poll options on function call.*/
     this.updatePollById = function(req, res) {
         var isAuth = req.isAuthenticated();
         var pollID = req.params.id;
         if (isAuth && pollID) {
             Poll.findOne({_id: pollID}, function(err, poll) {
-                if (err) return handleError(err, res);
+                if (err) return handleError(err, req, res);
 
                 var optName = req.body.option;
                 poll.options.names.push(optName);
                 poll.options.votes.push(0);
                 updatePollDb(pollID, poll, function(err) {
-                    if (err) return handleError(err, res);
+                    if (err) return handleError(err, req, res);
                     res.redirect("/polls/" + pollID);
                 });
 
@@ -199,14 +240,14 @@ module.exports = function(path) {
         var user = req.user;
         if (pollID && isAuth) {
             Poll.findOne({_id: pollID}, function(err, pollResult) {
-                if (err) return handleError(err, res);
+                if (err) return handleError(err, req, res);
 
                 if ($DEBUG) console.log(
                     "deletePollByID: " + JSON.stringify(pollResult));
 
                 if (isPollCreator(req, pollResult)) {
                     Poll.remove({_id: pollID}, function(err) {
-                        if (err) return handleError(err, res);
+                        if (err) return handleError(err, req, res);
 
                         removePollFromUser(pollResult, user, function(err) {
 
@@ -231,7 +272,7 @@ module.exports = function(path) {
         var i = 0;
         var pollID = req.params.id;
         Poll.findOne({_id: pollID}, function(err, poll) {
-            if (err) return handleError(err, res);
+            if (err) return handleError(err, req, res);
 
             if ($DEBUG) {
                 console.log("addVoteOnPoll req.body: " + JSON.stringify(req.body));
@@ -273,7 +314,7 @@ module.exports = function(path) {
             }
 
             updatePollDb(pollID, poll, function(err){
-                if (err) return handleError(err, res);
+                if (err) return handleError(err, req, res);
                 res.redirect("/polls/" + pollID);
             });
 
