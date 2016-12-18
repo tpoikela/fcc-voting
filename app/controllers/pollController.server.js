@@ -97,57 +97,62 @@ module.exports = function(path, app_url) {
 
 	/** Adds one poll into the database. */
 	this.addPoll = function(req, res) {
-        var user = req.user;
-        var poll = new Poll();
-        poll.info.creator = user.username;
+        if (req.user && req.body) {
+            var user = req.user;
+            var poll = new Poll();
+            poll.info.creator = user.username;
 
-        // Extract name and options from post-request
-        poll.name = req.body.name;
-        var opts = req.body.options;
-        poll.options.names = opts;
+            // Extract name and options from post-request
+            poll.name = req.body.name;
+            var opts = req.body.options;
+            poll.options.names = opts;
 
-        var votes = [];
-        for (var i = 0; i < opts.length; i++) {
-            votes.push(0);
-        }
-        poll.options.votes = votes;
-
-        if ($DEBUG) console.log(
-            "addPoll: BEFORE saving new poll: " + JSON.stringify(poll));
-
-        poll.save(function(err) {
-            if (err) {
-                if ($DEBUG) {
-                    console.log("addPoll save had errors");
-                }
-                return handleError(err, req, res);
+            var votes = [];
+            for (var i = 0; i < opts.length; i++) {
+                votes.push(0);
             }
+            poll.options.votes = votes;
 
-            if ($DEBUG) console.log("addPoll ID is " + poll._id);
+            if ($DEBUG) console.log(
+                "addPoll: BEFORE saving new poll: " + JSON.stringify(poll));
 
-            // Correct thing would be to remove poll on error because otherwise
-            // Poll and User data are inconsistent
-            User.findOne({_id: user._id}, function(err, result) {
-                if (err) return handleError(err, req, res);
+            poll.save(function(err) {
+                if (err) {
+                    if ($DEBUG) {
+                        console.log("addPoll save had errors");
+                    }
+                    return handleError(err, req, res);
+                }
 
-                result.polls.push(poll._id);
-                var setOpt = {$set: {
-                    polls: result.polls,
-                }};
+                if ($DEBUG) console.log("addPoll ID is " + poll._id);
 
-                User.update({_id:result._id}, setOpt, {}, function(err) {
+                // Correct thing would be to remove poll on error because otherwise
+                // Poll and User data are inconsistent
+                User.findOne({_id: user._id}, function(err, result) {
                     if (err) return handleError(err, req, res);
-                    var pollURI = encodeURIComponent(poll.name);
-                    var msg = {
-                        msg: "New poll has been created.",
-                        uri: getPollURI(poll.name),
-                    };
-                    res.json(msg);
+
+                    result.polls.push(poll._id);
+                    var setOpt = {$set: {
+                        polls: result.polls,
+                    }};
+
+                    User.update({_id:result._id}, setOpt, {}, function(err) {
+                        if (err) return handleError(err, req, res);
+                        var pollURI = encodeURIComponent(poll.name);
+                        var msg = {
+                            msg: "New poll has been created.",
+                            uri: getPollURI(poll.name),
+                        };
+                        res.json(msg);
+                    });
+
                 });
-
             });
-        });
-
+        }
+        else {
+            var err = new Error("Req doesn't contain user or body.");
+            return handleError(err, req, res);
+        }
 	};
 
     /** Given req and poll object, returns object for filling the pug
