@@ -13,7 +13,6 @@
          return last;
     };
 
-
     var $DEBUG = 1;
 
     var appUrl = window.location.origin;
@@ -31,10 +30,19 @@
 
     var getPollAPI = appUrl + '/polls/getpolls/' + pollID;
 
-    var formatLinkHTML = function(url, id, name) {
-        var atag = '<a href="' + url + '/' + id + '" ' + style + '>';
-        var html = atag + '<p id="' + id + '">' + name + '</p>' + '</a>';
-        return html;
+    /** Returns the a elem to the specified poll. */
+    var getPollAElem = function(url, id, name) {
+        var atag = document.createElement("a");
+        atag.setAttribute("href", url + "/" + id);
+        atag.setAttribute("class", "list-group-item");
+
+        var ptag = document.createElement("p");
+        ptag.setAttribute("class", "poll-list-item");
+        ptag.setAttribute("id", id);
+        ptag.textContent = name;
+
+        atag.appendChild(ptag);
+        return atag;
     };
 
     if (pollList !== null)
@@ -42,14 +50,14 @@
         if (err) throw new Error(err);
         else {
             var polls = JSON.parse(data);
+            var i = 0;
 
             if (polls.length > 0) {
-                var html = "";
-                for (var i = 0; i < polls.length; i++) {
+                for (i = 0; i < polls.length; i++) {
                     var id  = polls[i]._id;
-                    html += formatLinkHTML(apiUrl, id, polls[i].name);
+                    var elem = getPollAElem(apiUrl, id, polls[i].name);
+                    pollList.appendChild(elem);
                 }
-                pollList.innerHTML = html;
             }
             else {
                 pollList.innerHTML = "<p " + style + " >" +
