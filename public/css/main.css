@@ -87,7 +87,6 @@ header p {
   color: #212121; }
 
 .user-profile {
-  width: 350px;
   border-radius: 3px;
   margin: 0 auto 0 auto;
   background-color: #EEE;
@@ -161,5 +160,17 @@ a.author {
 svg {
   width: 100%;
   display: block; }
+
+li a {
+  list-style-type: none; }
+
+ul#options-list {
+  list-style-type: none; }
+
+p.poll-list-item {
+  margin: 0; }
+
+ul#profile-poll-list {
+  list-style-type: none; }
 
 /*# sourceMappingURL=main.css.map */
