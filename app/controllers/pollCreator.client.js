@@ -69,7 +69,7 @@
     addButton.addEventListener("click", function() {
         console.log("Poll name is " + pollNameInput.value);
         var optElem = document.createElement("li");
-        optElem.setAttribute("class", "poll-option");
+        optElem.setAttribute("class", "list-group-item lpoll-option");
         optElem.textContent = optionNameInput.value;
         optionList.appendChild(optElem);
         optionNameInput.value = "";
