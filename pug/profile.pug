@@ -13,15 +13,18 @@ html
     +createButton(isAuth)
 
     div.container
-      div.user-profile
+      div.row
+        div.col-md-3
+        div.user-profile.col-md-6
 
-        p
-          span Username:
-          span#profile-username.profile-value
+          p
+            span Username: 
+            span#profile-username.profile-value
 
-        p Polls created:
-        //- Populated from user poll info
-        ul#profile-poll-list
+          p Polls created:
+          //- Populated from user poll info
+          ul#profile-poll-list
+        div.col-md-3
 
     script(type="text/javascript" src="common/ajax-functions.js")
     script(type="text/javascript" src="controllers/userController.client.js")
