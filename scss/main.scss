@@ -131,7 +131,7 @@ header p {
 //---------------------------------------------------------------------------
 
 .user-profile {
-	width: 350px;
+	//width: 350px;
 	border-radius: 3px;
 	margin: 0 auto 0 auto;
 	background-color: #EEE;
@@ -155,7 +155,6 @@ header p {
 .profile-value {
 	font-weight: 400;
 }
-
 
 .user-profile .menu:hover {
 	color: $clem-color;
@@ -228,4 +227,20 @@ a.author {
 svg {
     width: 100%;
     display: block;
+}
+
+li a {
+    list-style-type: none;
+}
+
+ul#options-list {
+    list-style-type: none;
+}
+
+p.poll-list-item {
+    margin: 0;
+}
+
+ul#profile-poll-list {
+    list-style-type: none;
 }
