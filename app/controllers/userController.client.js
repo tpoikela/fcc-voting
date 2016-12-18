@@ -11,6 +11,7 @@
    var apiUrl = appUrl + '/api/:id';
 
    var profilePollList = document.querySelector('#profile-poll-list') || null;
+   var style = "class='list-group-item'";
 
    /** Updates HTML element with given data and property.*/
    function updateHtmlElement (data, element, userProperty) {
@@ -41,7 +42,7 @@
        for (i = 0; i < polls.length; i++) {
            var pollName = polls[i].name;
            var pollID = polls[i]._id;
-           var pollLink = '<a href="' + pollUrl + '/' + pollID + '">' + pollName +
+           var pollLink = '<a href="' + pollUrl + '/' + pollID + '" ' + style + '>' + pollName +
                '</a>';
 
            var pollItem = document.createElement('li');
