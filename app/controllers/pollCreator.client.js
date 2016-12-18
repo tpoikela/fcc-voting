@@ -42,7 +42,11 @@
 
         // Callback called after POST finishes
         var postCb = function(err, data) {
-            if (err) throw new Error(err);
+            if (err) {
+                var msg = "Error creating the poll. <, > and / are not allowed in names.";
+                pollCreateMsg.setAttribute("class", "text-danger");
+                pollCreateMsg.textContent = msg;
+            }
             else {
                 if (data) {
                     var json = JSON.parse(data);
@@ -52,6 +56,7 @@
                         "You can share the poll using the link:<br/>" +
                         "<a href='" + json.uri + "'>"+ json.uri + "</a></p>";
 
+                    pollCreateMsg.setAttribute("class", "text-info");
                     pollCreateMsg.innerHTML = html;
                 }
             }
