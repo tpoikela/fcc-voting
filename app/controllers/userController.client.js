@@ -2,6 +2,8 @@
 
 (function () {
 
+   var $DEBUG = 0;
+
    var pollUrl = appUrl + '/polls';
 
    var profileId = document.querySelector('#profile-id') || null;
@@ -57,7 +59,7 @@
       if (err) throw new Error(err);
 	  if (!data) return;
 
-      console.log("Data is " + data);
+      if ($DEBUG) console.log("Data is " + data);
       var userObject = JSON.parse(data);
 
       if (welcomeMsg !== null) setWelcomeMsg(userObject);
