@@ -13,7 +13,7 @@
          return last;
     };
 
-    var $DEBUG = 1;
+    var $DEBUG = 0;
 
     var appUrl = window.location.origin;
     var thisUrl = window.location;
