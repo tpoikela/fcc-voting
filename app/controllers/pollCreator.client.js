@@ -19,7 +19,7 @@
         var options = document.getElementsByClassName("poll-option");
         var res = "";
         for (var i = 0; i < options.length; i++) {
-            res += "options=" + options[i].innerHTML;
+            res += "options=" + options[i].textContent;
             if (i < options.length-1) res += "&";
         }
         return res;
@@ -65,7 +65,7 @@
         console.log("Poll name is " + pollNameInput.value);
         var optElem = document.createElement("li");
         optElem.setAttribute("class", "poll-option");
-        optElem.innerHTML = optionNameInput.value;
+        optElem.textContent = optionNameInput.value;
         optionList.appendChild(optElem);
         optionNameInput.value = "";
     });
