@@ -19,22 +19,24 @@ html
           div.create-poll-form
 
             //- Poll name is entered here by the user
-            span.label.label-default Poll name:
-            input#poll-name-input(
-              type="text" class="form-control"
-              placeholder="Poll name" pattern="^[^<>/]+$"
-              title="No <,/ or > in poll name"
-              required=required)
+            form#poll-create-form(action="")
+              span.label.label-default Poll name:
+              input#poll-name-input(
+                type="text" class="form-control"
+                placeholder="Poll name" pattern="^[^<>/]+$"
+                title="No <,/ or > in poll name"
+                required=required)
 
-            //- A poll option must be entered here
-            span.label.label-default Option:
-            input#option-name-input(
-              type="text" class="form-control"
-              placeholder="Option name" pattern="^[^<>/]+$"
-              title="No <,/ or > in option name")
+              //- A poll option must be entered here
+              span.label.label-default Option:
+              input#option-name-input(
+                type="text" class="form-control"
+                placeholder="Option name" pattern="^[^<>/]+$"
+                title="No <,/ or > in option name")
 
           button#add-option-button.btn.btn-primary Add option
-          button#create-button.btn.btn-success Create poll
+          button#create-button.btn.btn-success(
+            type="submit" form="poll-create-form") Create poll
           br
 
           span#poll-create-message
