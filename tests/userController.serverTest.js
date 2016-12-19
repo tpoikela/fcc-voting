@@ -98,9 +98,26 @@ describe('How userController on server-side works', function() {
 
         Promise.all([ctrl.getUser(req, res)]).then(function() {
             sinon.assert.calledOnce(res.json);
-
+            sinon.assert.calledWith(res.json, user);
             done();
+        });
 
+    });
+
+    it('should send error msg if no user is found', function(done) {
+        var user = Fact.createUser();
+        req.user = user;
+        findOne.restore();
+
+        sinon.mock(User).expects("findOne")
+            .chain("populate").withArgs("polls")
+            .chain("exec").yields(null, null);
+
+        Promise.all([ctrl.getUser(req, res)]).then(function() {
+            var msg = {error: "No user " + user.username + " found in database."};
+            sinon.assert.calledOnce(res.json);
+            sinon.assert.calledWith(res.json, msg);
+            done();
         });
 
     });
