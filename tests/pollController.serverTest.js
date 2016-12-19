@@ -18,10 +18,16 @@ var createPoll = function() {
     };
 };
 
+/** Returns object containing variables needed in .pug templates.*/
 var getPugVars = function(user, poll) {
     var isCreator = user.username === poll.info.creator;
-    return{pollName: poll.name, pollID: poll._id, options: [], votes:[],
-        isAuth: true, isCreator: isCreator};
+    return {pollName: poll.name,
+        pollID: poll._id,
+        options: [], votes:[],
+        isAuth: true,
+        isCreator: isCreator,
+        pollURI: app_url + "/p/" + encodeURIComponent(poll.name),
+    };
 };
 
 
@@ -36,6 +42,7 @@ describe('How pollController on server side works', function() {
     var pollRemove = null;
 
     var userUpdate = null;
+    var userFindOne = null;
 
     beforeEach(function() {
         // Mock req/res for all unit tests
@@ -49,14 +56,18 @@ describe('How pollController on server side works', function() {
         pollRemove = sinon.stub(Poll, "remove");
 
         userUpdate = sinon.stub(User, "update");
+        userFindOne = sinon.stub(User, "findOne");
     });
 
     afterEach(function() {
         Fact.restoreRes(res);
+
         pollFindOne.restore();
         pollUpdate.restore();
         pollRemove.restore();
+
         userUpdate.restore();
+        userFindOne.restore();
     });
 
     it('should return all polls as a result', function() {
@@ -87,20 +98,18 @@ describe('How pollController on server side works', function() {
 
         var expMsg = {
             msg: "New poll has been created.",
-            uri: app_url + "/polls/" + encodeURIComponent("TestPoll"),
+            uri: app_url + "/p/" + encodeURIComponent("Test Poll?"),
         };
 
         var user = Fact.createUser();
-        var userFindOne = sinon.stub(User, "findOne");
         userFindOne.yields(null, user);
 
         userUpdate.yields(null);
 
         Poll.prototype.save = function(cb) {cb(null);};
 
-        req.body.name = "TestPoll";
+        req.body.name = "Test Poll?";
         req.body.options = ["A", "B", "C", "D"];
-
         req.user = user;
 
         Promise.all([ctrl.addPoll(req, res)]).then(function() {
@@ -177,7 +186,6 @@ describe('How pollController on server side works', function() {
 
     });
 
-
     it('should retrieve poll by name', function(done) {
         var pollName = "TestPollName";
         var poll = createPoll();
@@ -189,11 +197,8 @@ describe('How pollController on server side works', function() {
 
         pollFindOne.yields(null, poll);
 
-        var pugVars = getPugVars(user, poll);
-
         Promise.all([ctrl.getPollByName(req, res)]).then(function() {
-            sinon.assert.calledWith(res.render, process.cwd() + "/pug/poll.pug",
-                pugVars);
+            sinon.assert.calledWith(res.redirect, "/polls/" + poll._id);
             done();
         });
     });
@@ -203,7 +208,23 @@ describe('How pollController on server side works', function() {
     // ERROR tests
     //---------------------------------------------------------------------------
 
-    it('should reject a voter already voted', function() {
+    it('should reject a voter already voted', function(done) {
+        var poll = createPoll();
+        var user = Fact.createUser();
+        req.user = user;
+        user.username = "Test User";
+        poll.info.voters.push(user.username);
+
+        var expPath = process.cwd() + "/pug/poll.pug";
+        var expVars = getPugVars(user, poll);
+        expVars.alreadyVoted = true;
+
+        pollFindOne.yields(null, poll);
+
+        Promise.all([ctrl.addVoteOnPoll(req, res)]).then(function() {
+            sinon.assert.calledWith(res.render, expPath, expVars);
+            done();
+        });
     });
 
 });

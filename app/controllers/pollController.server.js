@@ -24,7 +24,7 @@ module.exports = function(path, app_url) {
         return res.sendStatus(500);
     };
 
-    /** Returns true is request came from poll's creator.*/
+    /** Returns true if a request came from the poll's creator.*/
     var isPollCreator = function(req, poll) {
         if (req.hasOwnProperty("user")) {
             return req.user.username === poll.info.creator;
@@ -50,7 +50,7 @@ module.exports = function(path, app_url) {
 
     };
 
-    /** Removes a poll from a user.*/
+    /** Removes a poll from the given user.*/
     var removePollFromUser = function(poll, user, cb) {
         User.findOne({_id: user._id}, function(err, userResult) {
             if (err) return cb(err);
@@ -195,7 +195,7 @@ module.exports = function(path, app_url) {
     this.getPollByName = function(req, res) {
         if (req.params.id) {
             var pollName = decodeURIComponent(req.params.id);
-            console.log("getPollByName: pollName " + pollName);
+            if ($DEBUG) console.log("getPollByName: pollName " + pollName);
             // Decode the pollName from URL
             Poll.findOne({name: pollName}, function(err, result) {
                 if (err) return handleError(err, req, res);
@@ -274,6 +274,11 @@ module.exports = function(path, app_url) {
 
     /** Adds one vote to the poll. TODO prevent double-voting by the same user.*/
     this.addVoteOnPoll = function(req, res) {
+        if (!req.user && !req.params) {
+            var err = new Error("No user or params req!");
+            return handleError(err, req, res);
+        }
+
         var i = 0;
         var pollID = req.params.id;
         Poll.findOne({_id: pollID}, function(err, poll) {
@@ -303,6 +308,7 @@ module.exports = function(path, app_url) {
             if (index >= 0) {
                 var pugVars = getPollPugVars(req, poll);
                 pugVars.alreadyVoted = true;
+                if ($DEBUG) console.log("Ctrl Vars: " + JSON.stringify(pugVars));
                 return res.render(path + "/pug/poll.pug", pugVars);
             }
 
