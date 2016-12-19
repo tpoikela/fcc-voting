@@ -68,9 +68,6 @@ module.exports = function(path) {
         if (req.isAuthenticated()) {
             console.log("getUser Req auth, user " + JSON.stringify(req.user));
             var username = req.user.username;
-
-            //TODO send a full user object
-            //res.json({username: username});
             sendAuthenticatedUserInfo(res, username);
         }
         else {
