@@ -103,8 +103,9 @@ describe('How pollController on server side works', function() {
 
         var user = Fact.createUser();
         userFindOne.yields(null, user);
-
         userUpdate.yields(null);
+
+        pollFindOne.yields(null, null);
 
         Poll.prototype.save = function(cb) {cb(null);};
 
