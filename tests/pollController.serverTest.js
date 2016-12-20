@@ -77,11 +77,11 @@ describe('How pollController on server side works', function() {
 
         ctrl.getPolls(req, res);
 
-        Promise
         expect(res.statusCode).to.equal(200);
         expect(res.json.calledWith(expected)).to.be.true;
 
     });
+
 
     it('returns requested poll as JSON', function() {
         var expected = {_id: 1234, name: "xxX"};
