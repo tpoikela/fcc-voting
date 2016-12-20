@@ -77,6 +77,7 @@ describe('How pollController on server side works', function() {
 
         ctrl.getPolls(req, res);
 
+        Promise
         expect(res.statusCode).to.equal(200);
         expect(res.json.calledWith(expected)).to.be.true;
 

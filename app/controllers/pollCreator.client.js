@@ -14,6 +14,8 @@
 
     var apiUrl = appUrl + '/polls/create';
 
+    var addedOptions = [];
+
     // Returns the option parameters for a poll
     var getOptParams = function() {
         var options = document.getElementsByClassName("poll-option");
@@ -67,12 +69,20 @@
 
     // When clicked, adds a new option to the Poll
     addButton.addEventListener("click", function() {
-        console.log("Poll name is " + pollNameInput.value);
-        var optElem = document.createElement("li");
-        optElem.setAttribute("class", "list-group-item lpoll-option");
-        optElem.textContent = optionNameInput.value;
-        optionList.appendChild(optElem);
-        optionNameInput.value = "";
+        var optName = optionNameInput.value;
+        if (addedOptions.indexOf(optName) === -1) {
+            addedOptions.push(optName);
+            var optElem = document.createElement("li");
+            optElem.setAttribute("class", "list-group-item lpoll-option");
+            optElem.textContent = optName;
+            optionList.appendChild(optElem);
+            optionNameInput.value = "";
+        }
+        else {
+            var msg = "Use unique option names. Duplicate name: " + optName;
+            pollCreateMsg.setAttribute("class", "text-danger");
+            pollCreateMsg.textContent = msg;
+        }
     });
 
 })();
