@@ -155,14 +155,16 @@ describe('How pollController on server side works', function() {
         req.params = {id: pollObj._id};
         req.user = Fact.createUser();
         req.user.username = pollObj.info.creator;
+        req.user.polls.push(pollObj._id);
 
         pollFindOne.yields(null, pollObj);
         pollRemove.yields(null);
+        userFindOne.yields(null, req.user);
+        userUpdate.yields(null);
 
         Promise.all([ctrl.deletePollById(req, res)]).then(function() {
             sinon.assert.calledOnce(res.redirect);
             sinon.assert.calledWith(res.redirect, "/");
-
             done();
         });
 

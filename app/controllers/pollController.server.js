@@ -88,6 +88,11 @@ module.exports = function(path, app_url) {
                     cb(null); // No error, everything OK
                 });
             }
+            else {
+                console.log("XXXXXXXXXXXXXXXXXXX");
+                var err = new Error("User doesn't have poll " + poll._id);
+                cb(err);
+            }
 
         });
     };
@@ -271,10 +276,9 @@ module.exports = function(path, app_url) {
                         if (err) return handleError(err, req, res);
 
                         removePollFromUser(pollResult, user, function(err) {
-
+                            if (err) return handleError(err, req, res);
+                            res.redirect("/");
                         });
-                        // TODO add nice msg about poll deletion
-                        res.redirect("/");
                     });
                 }
                 else {
