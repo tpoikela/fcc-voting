@@ -216,7 +216,8 @@ a.author {
     word-wrap: break-word;
     color: $clem-color;
     display: inline-block;
-    overflow: scroll;
+    //overflow: scroll;
+    overflow: auto;
 }
 
 .poll-radiobutton-label {
