@@ -151,7 +151,7 @@ a.author {
   word-wrap: break-word;
   color: #FFA000;
   display: inline-block;
-  overflow: scroll; }
+  overflow: auto; }
 
 .poll-radiobutton-label {
   word-wrap: break-word;
