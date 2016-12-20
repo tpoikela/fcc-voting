@@ -73,7 +73,7 @@
         if (addedOptions.indexOf(optName) === -1) {
             addedOptions.push(optName);
             var optElem = document.createElement("li");
-            optElem.setAttribute("class", "list-group-item lpoll-option");
+            optElem.setAttribute("class", "list-group-item poll-option");
             optElem.textContent = optName;
             optionList.appendChild(optElem);
             optionNameInput.value = "";
