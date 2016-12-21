@@ -13,7 +13,7 @@ var app_url = "http://127.0.0.1:8080";
 
 var createPoll = function() {
     return {name: "poll", _id: 1234,
-        options: {names: [], votes:[]},
+        options: {names: ["aaa"], votes:[0]},
         info: {creator: "xxx", voters: []},
     };
 };
@@ -23,7 +23,7 @@ var getPugVars = function(user, poll) {
     var isCreator = user.username === poll.info.creator;
     return {pollName: poll.name,
         pollID: poll._id,
-        options: [], votes:[],
+        options: poll.options.names, votes: poll.options.votes,
         isAuth: true,
         isCreator: isCreator,
         pollURI: app_url + "/p/" + encodeURIComponent(poll.name),
@@ -179,6 +179,8 @@ describe('How pollController on server side works', function() {
         req.user = Fact.createUser();
         req.params = {id: expId};
 
+        req.body.option = "aaa";
+
         pollFindOne.yields(null, pollObj);
         pollUpdate.yields(null);
 
@@ -216,6 +218,8 @@ describe('How pollController on server side works', function() {
         var poll = createPoll();
         var user = Fact.createUser();
         req.user = user;
+        req.body.option = "aaa";
+
         user.username = "Test User";
         poll.info.voters.push(user.username);
 

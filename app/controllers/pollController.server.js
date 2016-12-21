@@ -19,7 +19,6 @@ module.exports = function(path, app_url) {
     var handleError = function(err, req, res) {
         console.error("SERVER ERROR: Headers :" + JSON.stringify(req.headers));
         console.error("\t From IP: " + req.ip);
-        //console.error("\t From IP: " + req.ip);
         console.error(err);
         return res.sendStatus(500);
     };
@@ -89,7 +88,6 @@ module.exports = function(path, app_url) {
                 });
             }
             else {
-                console.log("XXXXXXXXXXXXXXXXXXX");
                 var err = new Error("User doesn't have poll " + poll._id);
                 cb(err);
             }
@@ -335,6 +333,13 @@ module.exports = function(path, app_url) {
             // Find the voted option position and add a vote
             var options = poll.options.names;
             var votedOption = req.body.option;
+
+            if (!votedOption) {
+                var pugVars = getPollPugVars(req, poll);
+                pugVars.noOption = true;
+                return res.render(path + "/pug/poll.pug", pugVars);
+            }
+
             for (i = 0; i < options.length; i++) {
                 if (votedOption === options[i]) {
                     poll.options.votes[i] += 1;
