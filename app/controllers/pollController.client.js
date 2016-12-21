@@ -4,7 +4,6 @@
 (function () {
 
     var getPollIdOrName = function(url) {
-        console.log("URL is " + url + " type " + typeof url);
          var arr = url.split('/');
          var last = arr[arr.length - 1];
          if (/[a-zA-Z0-9]/.test(last)) {
@@ -17,7 +16,6 @@
 
     var appUrl = window.location.origin;
     var thisUrl = window.location;
-    //var pollID = /[a-zA-Z0-9]+$/.exec(thisUrl);
     var pollID = getPollIdOrName(thisUrl.toString());
 
     if ($DEBUG) console.log("URL: |" + thisUrl + "| Poll ID is |" + pollID + "|");
@@ -45,6 +43,7 @@
         return atag;
     };
 
+    // Called on the index page to show the list of polls to the user.
     if (pollList !== null)
     ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (err, data) {
         if (err) throw new Error(err);
