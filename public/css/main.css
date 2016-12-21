@@ -1,4 +1,5 @@
 /********* Fonts **********/
+/** These are the main colors used.*/
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -28,7 +29,7 @@ span {
   padding: 0; }
 
 header {
-  color: #00BCD4;
+  color: #FF6600;
   height: 56px;
   margin: 0 0 14px 0;
   text-align: center; }
@@ -47,13 +48,13 @@ header p {
   text-decoration: none;
   padding: 6px;
   margin: 0;
-  color: #727272; }
+  color: #006B6B; }
 
 .menu:visited {
-  color: #727272; }
+  color: #006B6B; }
 
 .menu:hover {
-  color: #FFA000; }
+  color: #009999; }
 
 .menu:active {
   color: #FF630D; }
@@ -71,8 +72,8 @@ header p {
   width: 100px;
   font-weight: 500; }
 
-.btn-clem {
-  background-color: #00BCD4; }
+.btn-voting {
+  background-color: #FF6600; }
 
 .btn:focus {
   outline: none; }
@@ -82,14 +83,10 @@ header p {
   -webkit-transform: scale(0.9, 0.9);
   -moz-transform: scale(0.9, 0.9); }
 
-.btn-delete {
-  background-color: #ECEFF1;
-  color: #212121; }
-
 .user-profile {
   border-radius: 3px;
   margin: 0 auto 0 auto;
-  background-color: #EEE;
+  background-color: #FED9BF;
   text-align: center;
   color: #000; }
 
@@ -100,14 +97,14 @@ header p {
   margin-bottom: 16px; }
 
 .user-profile p {
-  margin: 0 0 0 16px;
+  margin: 0 0 0 0;
   text-align: left; }
 
 .profile-value {
   font-weight: 400; }
 
 .user-profile .menu:hover {
-  color: #FFA000; }
+  color: #009999; }
 
 .user-profile .menu:active {
   color: #FF630D; }
@@ -127,7 +124,7 @@ header p {
   margin: -25px 0 0 0;
   font-weight: 500;
   font-size: 60px;
-  color: #FFA000; }
+  color: #009999; }
 
 #menu-divide {
   color: #FFFFFF;
@@ -143,13 +140,10 @@ header p {
 a.author {
   margin: auto 0; }
 
-.vote-label {
-  fill: #FFA000; }
-
 .vote-option-label {
   position: absolute;
   word-wrap: break-word;
-  color: #FFA000;
+  color: #009999;
   display: inline-block;
   overflow: auto; }
 
@@ -171,6 +165,7 @@ p.poll-list-item {
   margin: 0; }
 
 ul#profile-poll-list {
+  padding: 0;
   list-style-type: none; }
 
 /*# sourceMappingURL=main.css.map */

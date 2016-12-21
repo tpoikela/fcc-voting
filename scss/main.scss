@@ -1,9 +1,13 @@
 
 /********* Fonts **********/
 
-$clem-color: #FFA000;
-$btn-clem-bg: #00BCD4;
-$menu-color:  #727272;
+/** These are the main colors used.*/
+$main-color: #009999;
+$btn-color: #FF6600;
+$btn-color-sec: #FEB380;
+$bg-color-3rd: #FED9BF;
+$menu-color: #006B6B;
+$menu-active-color: #FF630D;
 
 @font-face {
   font-family: 'Roboto';
@@ -47,7 +51,7 @@ span {
 //---------------------------------------------------------------------------
 
 header {
-	color: $btn-clem-bg;
+	color: $btn-color;
 	height: 56px;
 	margin: 0 0 14px 0;
 	text-align: center;
@@ -81,11 +85,11 @@ header p {
 }
 
 .menu:hover {
-	color: $clem-color;
+	color: $main-color;
 }
 
 .menu:active {
-	color: #FF630D;
+	color: $menu-active-color;
 }
 
 //---------------------------------------------------------------------------
@@ -107,8 +111,8 @@ header p {
 	font-weight: 500;
 }
 
-.btn-clem {
-	background-color: $btn-clem-bg;
+.btn-voting {
+	background-color: $btn-color;
 }
 
 .btn:focus {
@@ -121,11 +125,6 @@ header p {
 	-moz-transform: scale(0.9, 0.9);
 }
 
-.btn-delete {
-	background-color: #ECEFF1;
-	color: #212121;
-}
-
 //---------------------------------------------------------------------------
 // USER PROFILE
 //---------------------------------------------------------------------------
@@ -134,7 +133,7 @@ header p {
 	//width: 350px;
 	border-radius: 3px;
 	margin: 0 auto 0 auto;
-	background-color: #EEE;
+	background-color: $bg-color-3rd;
 	text-align: center;
 	color: #000;
 }
@@ -148,7 +147,7 @@ header p {
 }
 
 .user-profile p {
-	margin: 0 0 0 16px;
+	margin: 0 0 0 0;
 	text-align: left;
 }
 
@@ -157,11 +156,11 @@ header p {
 }
 
 .user-profile .menu:hover {
-	color: $clem-color;
+	color: $main-color;
 }
 
 .user-profile .menu:active {
-	color: #FF630D;
+	color: $menu-active-color;
 }
 
 //---------------------------------------------------------------------------
@@ -186,7 +185,7 @@ header p {
 	margin: -25px 0 0 0;
 	font-weight: 500;
 	font-size: 60px;
-	color: $clem-color;
+	color: $main-color;
 }
 
 #menu-divide {
@@ -207,16 +206,11 @@ a.author {
     margin: auto 0;
 }
 
-.vote-label {
-    fill: $clem-color;
-}
-
 .vote-option-label {
     position: absolute;
     word-wrap: break-word;
-    color: $clem-color;
+    color: $main-color;
     display: inline-block;
-    //overflow: scroll;
     overflow: auto;
 }
 
@@ -243,5 +237,7 @@ p.poll-list-item {
 }
 
 ul#profile-poll-list {
+    padding: 0;
     list-style-type: none;
 }
+
