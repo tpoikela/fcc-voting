@@ -20,7 +20,8 @@
     var getOptParams = function() {
         var options = document.getElementsByClassName("poll-option");
         var res = "";
-        for (var i = 0; i < options.length; i++) {
+        var i = 0;
+        for (i = 0; i < options.length; i++) {
             res += "options=" + options[i].textContent;
             if (i < options.length-1) res += "&";
         }

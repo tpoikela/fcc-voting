@@ -1,6 +1,6 @@
 
 
-/** A module for validation names and passwords. */
+/** A module for validating names and passwords. */
 module.exports = function() {
 
     var minPasswordLen =  1;
@@ -16,7 +16,8 @@ module.exports = function() {
     var validateName = this.validateName;
 
     this.validateNameArray = function(arr) {
-        for (var i = 0; i < arr.length; i++) {
+        var i = 0;
+        for (i = 0; i < arr.length; i++) {
             if (!validateName(arr[i])) return false;
         }
         return true;
@@ -28,7 +29,6 @@ module.exports = function() {
             return pw.length >= minPasswordLen;
         }
         return false;
-
     };
 
 };
