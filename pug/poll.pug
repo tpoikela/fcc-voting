@@ -3,6 +3,7 @@
 //- 2. If a user is the poll creator, add a Delete Button as well
 
 - var votedAlready = typeof alreadyVoted !== "undefined";
+- var noOptGiven = typeof noOption !== "undefined";
 
 include mixins.pug
 
@@ -34,8 +35,6 @@ html
           - if (isCreator)
             p To share the poll, you can use the following link: 
               a(href=pollURI)= pollURI
-            form(method="GET" action="/polls/delete/" + pollID)
-              button.btn.btn-delete.btn-danger(type="submit") Delete Poll
 
           //- Generate voting options for the user.
           div.voting-radio-buttons
@@ -45,10 +44,13 @@ html
                   input.poll-radiobutton(type="radio" name="option" value="" + options[i])
                   label.poll-radiobutton-label= options[i]
               -}
-              button.btn.btn-clem(type="submit") Vote!
+              button.btn.btn-voting(type="submit") Vote!
 
             - if (votedAlready)
               p.text-danger You have already voted on this poll.
+            - if (noOptGiven)
+              p.text-danger Select an option to vote.
+
 
           //- Form for adding a voting option to the poll (for reg users)
           - if (isAuth)
@@ -56,7 +58,12 @@ html
             form(method="POST" action="/polls/update/" + pollID)
               input.form-control#optionField(
                 name="option" type="text" placeholder="Option" pattern="^[^<>/]+$")
-              button.btn.btn-clem(type="submit") Add Option
+              button.btn.btn-voting(type="submit") Add Option
+
+          // Poll creator can delete the poll any time
+          - if (isCreator)
+            form(method="GET" action="/polls/delete/" + pollID)
+              button.btn.btn-danger(type="submit") Delete Poll
 
         //- This part shows the poll results as a chart
         div.col-md-5.poll-page-box#poll-chart

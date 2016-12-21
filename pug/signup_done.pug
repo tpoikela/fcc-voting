@@ -15,9 +15,9 @@ html
 
     div.container
       - if (ok) {
-        p Registered user #{name} successfully.
+        p.text-success Registered user #{name} successfully.
       - } else {
-        p
+        p.text-danger
           Username #{name} already taken. Try again.
       - }
 
