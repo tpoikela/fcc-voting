@@ -4,6 +4,8 @@ var path = process.cwd();
 const UserController = require(path + '/app/controllers/userController.server.js');
 const PollController = require(path + '/app/controllers/pollController.server.js');
 
+var $DEBUG = 0;
+
 var _log = function(msg) {
     console.log("\t" + msg);
 };
@@ -80,8 +82,10 @@ module.exports = function (app, passport) {
     // Handle registration of user
     app.route('/forms/signup')
         .post(function(req, res) {
-            console.log("Got a signup form GET request..");
-			reqDebug(req);
+            if ($DEBUG) {
+                console.log("Got a signup form GET request..");
+                reqDebug(req);
+            }
             userController.addLocalUser(req, res);
         });
 
