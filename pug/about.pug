@@ -1,0 +1,31 @@
+//- File which is rendered for profile requests
+
+include mixins.pug
+
+doctype html
+html
+  +pageHead()
+
+  body
+    +topMenu("about")
+    +appTitle()
+
+    div.container
+      div.row
+        div.col-md-3
+        div.col-md-6
+          p
+            | Voting app for 
+            a(href="http://www.freecodecamp.com") FreeCodeCamp 
+            | fullstack projects.
+          p
+            | You can signup, vote on polls and create your own polls to share
+            | with other people. You can also add more voting options to other
+            | people's polls.
+          p
+            | You can access the full source code of the project from 
+            a(href="http://www.github/tpoikela/fcc-voting") GitHub.
+
+        div.col-md-3
+
+    +appFooter()
