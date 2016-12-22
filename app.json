@@ -1,0 +1,6 @@
+{
+  "name": "FCC Voting App",
+  "description": "Users can vote in polls and create new polls to share",
+  "repository": "https://github.com/tpoikela/fcc-voting",
+  "keywords": ["node", "express", "mongodb", "pug"]
+}
