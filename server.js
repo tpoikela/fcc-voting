@@ -10,8 +10,10 @@ var bodyParser = require('body-parser');
 var app = express();
 app.set("view engine", "pug");
 
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').load();
+}
 
-require('dotenv').load();
 require('./app/config/passport')(passport);
 
 app.url = process.env.APP_URL;
