@@ -46,6 +46,11 @@ module.exports = function (app, passport) {
             renderPug(req, res, "index.pug");
 		});
 
+	app.route('/about')
+		.get(function (req, res) {
+            renderPug(req, res, "about.pug");
+		});
+
 	app.route('/signup')
 		.get(function (req, res) {
             renderPug(req, res, "signup.pug");
