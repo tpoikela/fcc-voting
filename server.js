@@ -26,7 +26,7 @@ app.use('/common', express.static(process.cwd() + '/app/common'));
 app.use('/pug', express.static(process.cwd() + '/pug'));
 
 app.use(session({
-	secret: process.env.SECRET || 'secretClementine',
+	secret: process.env.SECRET_KEY,
 	resave: false,
 	saveUninitialized: true
 }));
