@@ -54,16 +54,18 @@ html
 
           //- Form for adding a voting option to the poll (for reg users)
           - if (isAuth)
-            p As a registered user, feel free to create a new voting option:
-            form(method="POST" action="/polls/update/" + pollID)
-              input.form-control#optionField(
-                name="option" type="text" placeholder="Option" pattern="^[^<>/]+$")
-              button.btn.btn-voting(type="submit") Add Option
+            div.ctrl-panel
+              p As a registered user, feel free to create a new voting option:
+              form(method="POST" action="/polls/update/" + pollID)
+                input.form-control#optionField(
+                  name="option" type="text" placeholder="Option" pattern="^[^<>/]+$")
+                button.btn.btn-voting(type="submit") Add Option
 
           // Poll creator can delete the poll any time
           - if (isCreator)
-            form(method="GET" action="/polls/delete/" + pollID)
-              button.btn.btn-danger(type="submit") Delete Poll
+            div.ctrl-panel
+              form(method="GET" action="/polls/delete/" + pollID)
+                button.btn.btn-danger(type="submit") Delete Poll
 
         //- This part shows the poll results as a chart
         div.col-md-5.poll-page-box#poll-chart
