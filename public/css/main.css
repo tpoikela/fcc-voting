@@ -1,5 +1,5 @@
-/********* Fonts **********/
 /** These are the main colors used.*/
+/********* Fonts **********/
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -11,9 +11,6 @@
   font-weight: 500;
   src: local("Roboto Medium"), local("Roboto-Medium"), url("../fonts/Roboto-Medium.ttf") format("truetype"); }
 /****** Main Styling ******/
-footer {
-  margin-top: 10px; }
-
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -27,9 +24,10 @@ img {
 span {
   font-weight: 500; }
 
-.container p {
-  text-align: center;
-  padding: 0; }
+footer {
+  margin-top: 10px; }
+  footer p {
+    text-align: center; }
 
 header {
   color: #FF6600;
@@ -62,7 +60,7 @@ header p {
 .menu:active {
   color: #FF630D; }
 
-#login-btn {
+#btn-login {
   width: 225px;
   padding: 7px 5px; }
 
@@ -72,7 +70,7 @@ header p {
   font-size: 14px;
   border-radius: 3px;
   padding: 10px 5px;
-  width: 100px;
+  width: 120px;
   font-weight: 500; }
 
 .btn-voting {
@@ -112,8 +110,8 @@ header p {
 .user-profile .menu:active {
   color: #FF630D; }
 
-#display-name {
-  font-weight: 400; }
+.ctrl-panel {
+  margin-top: 15px; }
 
 .login {
   margin: 10px auto 0 auto;
@@ -122,17 +120,13 @@ header p {
 #pw-login-msg {
   margin-top: 5px; }
 
-.clementine-text {
+.voting-text {
   padding: 0;
   margin: -25px 0 0 0;
   font-weight: 500;
   font-size: 60px;
-  color: #009999; }
-
-#menu-divide {
-  color: #FFFFFF;
-  display: inline;
-  margin: 0; }
+  color: #009999;
+  text-align: center; }
 
 .create-poll-form {
   margin-bottom: 15px; }

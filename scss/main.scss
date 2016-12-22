@@ -1,5 +1,4 @@
 
-/********* Fonts **********/
 
 /** These are the main colors used.*/
 $main-color: #009999;
@@ -8,7 +7,10 @@ $btn-color-sec: #FEB380;
 $bg-color-3rd: #FED9BF;
 $menu-color: #006B6B;
 $menu-active-color: #FF630D;
+$user-prof-color: #000;
+$header-a-p-color: #ECEFF1;
 
+/********* Fonts **********/
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -24,10 +26,6 @@ $menu-active-color: #FF630D;
 }
 
 /****** Main Styling ******/
-
-footer {
-    margin-top: 10px;
-}
 
 body {
 	font-family: 'Roboto', sans-serif;
@@ -45,9 +43,10 @@ span {
 	font-weight: 500;
 }
 
-.container p {
-	text-align: center;
-	padding: 0;
+footer {
+    margin-top: 10px;
+
+    p {text-align: center;}
 }
 
 //---------------------------------------------------------------------------
@@ -66,7 +65,7 @@ header a ~ p {
 	margin: 0;
 	padding: 0;
 	display: inline;
-	color: #ECEFF1;
+	color: $header-a-p-color;
 }
 
 header p {
@@ -100,7 +99,7 @@ header p {
 // BUTTONS
 //---------------------------------------------------------------------------
 
-#login-btn {
+#btn-login {
 	width: 225px;
 	padding: 7px 5px;
 }
@@ -111,7 +110,7 @@ header p {
 	font-size: 14px;
 	border-radius: 3px;
 	padding: 10px 5px;
-	width: 100px;
+	width: 120px;
 	font-weight: 500;
 }
 
@@ -134,12 +133,11 @@ header p {
 //---------------------------------------------------------------------------
 
 .user-profile {
-	//width: 350px;
 	border-radius: 3px;
 	margin: 0 auto 0 auto;
 	background-color: $bg-color-3rd;
 	text-align: center;
-	color: #000;
+	color: $user-prof-color;
 }
 
 .user-profile p:first-child {
@@ -171,8 +169,8 @@ header p {
 // MISC
 //---------------------------------------------------------------------------
 
-#display-name {
-	font-weight: 400;
+.ctrl-panel {
+    margin-top: 15px;
 }
 
 .login {
@@ -184,18 +182,13 @@ header p {
     margin-top: 5px;
 }
 
-.clementine-text {
+.voting-text {
 	padding: 0;
 	margin: -25px 0 0 0;
 	font-weight: 500;
 	font-size: 60px;
 	color: $main-color;
-}
-
-#menu-divide {
-	color: #FFFFFF;
-	display: inline;
-	margin: 0;
+    text-align: center;
 }
 
 .create-poll-form {
