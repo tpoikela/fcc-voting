@@ -22,14 +22,14 @@ html
         form(method="POST" action="/forms/signup")
 
           div.form-group
-            label(for="usernameField") Username
+            label.label.label-default(for="usernameField") Username
             input#usernameField.form-control(
               name="username" type="text"
               placeholder="Username" pattern="^[^<>/]+$"
               title="No <,/ or > in username")
 
           div.form-group
-            label(for="passwordField") Password
+            label.label.label-default(for="passwordField") Password
             input#passwordField.form-control(
               name="password" type="password"
               placeholder="Password" required="required"
