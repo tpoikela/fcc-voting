@@ -10,12 +10,12 @@ html
     +topMenu("index")
     +appTitle()
 
-    +createButton(isAuth)
 
     div.container
       div.row
         div.col-md-2
         div.col-md-8
+          +createButton(isAuth)
           h2 Polls
           ul#list-of-polls.list-group
         div.col-md-2
