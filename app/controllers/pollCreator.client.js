@@ -4,6 +4,7 @@
 'use strict';
 
 (function () {
+    var $DEBUG = 0; // When 1, prints debug information
 
     var optionList      = document.querySelector("#options-list");
     var createButton    = document.querySelector("#create-button");
@@ -41,7 +42,7 @@
         var pollName  = pollNameInput.value;
 
         params += "name=" + pollName + "&" + optParams;
-        console.log("Params are: " + params);
+        if ($DEBUG) console.log("Params are: " + params);
 
         // Callback called after POST finishes
         var postCb = function(err, data) {
@@ -54,7 +55,7 @@
                 if (data) {
                     var json = JSON.parse(data);
                     clearUserEnteredData();
-                    console.log("URI is " + json.uri);
+                    if ($DEBUG) console.log("URI is " + json.uri);
                     var html = '<p>' + json.msg + '<br/>' +
                         "You can share the poll using the link:<br/>" +
                         "<a href='" + json.uri + "'>"+ json.uri + "</a></p>";
