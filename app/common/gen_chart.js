@@ -42,9 +42,7 @@ function genPollChart(elemID, choices, votes, opts) {
         svg.attr("style", "height: " + maxHeight + "px");
     }
 
-    //var svgWidth = svg.style("width").replace("px", "");
     var svgWidth = w * 0.8;
-    //svg.attr("style", "width: " + svgWidth + "px");
     var svgHeight = svg.style("height").replace("px", "");
 
 	maxWidth = svgWidth - margin.left - margin.right;
